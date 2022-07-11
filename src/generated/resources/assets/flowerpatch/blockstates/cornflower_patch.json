@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "flowers=2": [
+      {
+        "model": "flowerpatch:block/cornflower_patch_2"
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_2",
+        "y": 90
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_2",
+        "y": 180
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_2",
+        "y": 270
+      }
+    ],
+    "flowers=3": [
+      {
+        "model": "flowerpatch:block/cornflower_patch_3"
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_3",
+        "y": 90
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_3",
+        "y": 180
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_3",
+        "y": 270
+      }
+    ],
+    "flowers=4": [
+      {
+        "model": "flowerpatch:block/cornflower_patch_4"
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_4",
+        "y": 90
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_4",
+        "y": 180
+      },
+      {
+        "model": "flowerpatch:block/cornflower_patch_4",
+        "y": 270
+      }
+    ]
+  }
+}
