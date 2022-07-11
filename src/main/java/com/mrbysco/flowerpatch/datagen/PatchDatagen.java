@@ -56,15 +56,15 @@ public class PatchDatagen {
 		ExistingFileHelper helper = event.getExistingFileHelper();
 
 		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new Loots(generator));
+			generator.addProvider(new Loots(generator));
 			BlockTagsProvider provider;
-			generator.addProvider(event.includeServer(), provider = new PatchBlockTags(generator, helper));
-			generator.addProvider(event.includeServer(), new PatchItemTags(generator, provider, helper));
+			generator.addProvider(provider = new PatchBlockTags(generator, helper));
+			generator.addProvider(new PatchItemTags(generator, provider, helper));
 		}
 		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new Language(generator));
-			generator.addProvider(event.includeClient(), new BlockModels(generator, helper));
-			generator.addProvider(event.includeClient(), new BlockStates(generator, helper));
+			generator.addProvider(new Language(generator));
+			generator.addProvider(new BlockModels(generator, helper));
+			generator.addProvider(new BlockStates(generator, helper));
 		}
 	}
 
@@ -87,8 +87,13 @@ public class PatchDatagen {
 				for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
 					if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
 						this.add(flowerPatchBlock, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-								.add(applyExplosionDecay(block, LootItem.lootTableItem(flowerPatchBlock.getFlowerDelegate().get()).apply(List.of(2, 3, 4), (value) ->
-										SetItemCountFunction.setCount(ConstantValue.exactly((float) value.intValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flowerPatchBlock).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, value))))))));
+								.add(applyExplosionDecay(block, LootItem.lootTableItem(flowerPatchBlock.getFlowerDelegate().get())
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
+												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 2))))
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))
+												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 3))))
+										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
+												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 4))))))));
 					}
 				}
 			}
@@ -187,7 +192,7 @@ public class PatchDatagen {
 		private BlockModelBuilder patchBlock(FlowerPatchBlock block, int flowers) {
 			String path = ForgeRegistries.BLOCKS.getKey(block).getPath() + "_" + flowers;
 			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
-					"cross", mcLoc(BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block.getFlowerDelegate().get()).getPath())).renderType("cutout");
+					"cross", mcLoc(BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block.getFlowerDelegate().get()).getPath()));
 		}
 	}
 

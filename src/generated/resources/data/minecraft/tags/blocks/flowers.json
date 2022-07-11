@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "flowerpatch:dandelion_patch",
     "flowerpatch:poppy_patch",

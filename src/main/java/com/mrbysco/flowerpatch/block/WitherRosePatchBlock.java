@@ -2,7 +2,6 @@ package com.mrbysco.flowerpatch.block;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
@@ -19,6 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class WitherRosePatchBlock extends FlowerPatchBlock {
@@ -30,7 +30,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 		return super.mayPlaceOn(state, blockGetter, pos) || state.is(Blocks.NETHERRACK) || state.is(Blocks.SOUL_SAND) || state.is(Blocks.SOUL_SOIL);
 	}
 
-	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, Random randomSource) {
 		VoxelShape voxelshape = this.getShape(state, level, pos, CollisionContext.empty());
 		Vec3 vec3 = voxelshape.bounds().getCenter();
 		double d0 = (double) pos.getX() + vec3.x;

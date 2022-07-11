@@ -2,52 +2,53 @@
   "type": "minecraft:block",
   "pools": [
     {
+      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
+              "function": "minecraft:set_count",
               "conditions": [
                 {
-                  "block": "flowerpatch:dandelion_patch",
                   "condition": "minecraft:block_state_property",
+                  "block": "flowerpatch:dandelion_patch",
                   "properties": {
                     "flowers": "2"
                   }
                 }
               ],
               "count": 2.0,
-              "function": "minecraft:set_count"
+              "add": false
             },
             {
-              "add": false,
+              "function": "minecraft:set_count",
               "conditions": [
                 {
-                  "block": "flowerpatch:dandelion_patch",
                   "condition": "minecraft:block_state_property",
+                  "block": "flowerpatch:dandelion_patch",
                   "properties": {
                     "flowers": "3"
                   }
                 }
               ],
               "count": 3.0,
-              "function": "minecraft:set_count"
+              "add": false
             },
             {
-              "add": false,
+              "function": "minecraft:set_count",
               "conditions": [
                 {
-                  "block": "flowerpatch:dandelion_patch",
                   "condition": "minecraft:block_state_property",
+                  "block": "flowerpatch:dandelion_patch",
                   "properties": {
                     "flowers": "4"
                   }
                 }
               ],
               "count": 4.0,
-              "function": "minecraft:set_count"
+              "add": false
             },
             {
               "function": "minecraft:explosion_decay"
@@ -55,8 +56,7 @@
           ],
           "name": "minecraft:dandelion"
         }
-      ],
-      "rolls": 1.0
+      ]
     }
   ]
 }

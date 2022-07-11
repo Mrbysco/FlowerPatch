@@ -4,7 +4,6 @@ import com.mrbysco.flowerpatch.config.PatchConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -14,6 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.FlowerBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition.Builder;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -22,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.Random;
 import java.util.function.Supplier;
 
 public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock {
@@ -72,18 +73,22 @@ public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock {
 		return new ItemStack(flowerDelegate.get());
 	}
 
+	public BlockBehaviour.OffsetType getOffsetType() {
+		return BlockBehaviour.OffsetType.XZ;
+	}
+
 	@Override
 	public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClient) {
 		return PatchConfig.COMMON.patchBonemealing.get() && state.getValue(FLOWERS) < MAX_FLOWERS;
 	}
 
 	@Override
-	public boolean isBonemealSuccess(Level level, RandomSource randomSource, BlockPos pos, BlockState state) {
+	public boolean isBonemealSuccess(Level level, Random randomSource, BlockPos pos, BlockState state) {
 		return true;
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel level, RandomSource randomSource, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel level, Random randomSource, BlockPos pos, BlockState state) {
 		level.setBlock(pos, state.setValue(FLOWERS, Mth.clamp(Integer.valueOf(state.getValue(FLOWERS) + 1), 2, 4)), 3);
 	}
 }

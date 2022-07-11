@@ -1,6 +1,5 @@
 {
   "parent": "flowerpatch:block/patch3",
-  "render_type": "minecraft:cutout",
   "textures": {
     "cross": "minecraft:block/orange_tulip"
   }

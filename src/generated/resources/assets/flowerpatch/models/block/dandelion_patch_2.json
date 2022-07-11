@@ -1,6 +1,5 @@
 {
   "parent": "flowerpatch:block/patch2",
-  "render_type": "minecraft:cutout",
   "textures": {
     "cross": "minecraft:block/dandelion"
   }
