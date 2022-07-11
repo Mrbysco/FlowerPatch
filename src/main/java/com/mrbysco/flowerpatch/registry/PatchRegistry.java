@@ -42,6 +42,8 @@ public class PatchRegistry {
 			new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 	public static final RegistryObject<Block> LILY_OF_THE_VALLEY_PATCH = BLOCKS.register("lily_of_the_valley_patch", () ->
 			new FlowerPatchBlock(MobEffects.POISON, 12, () -> Blocks.LILY_OF_THE_VALLEY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+
+//	TODO: Mushroom Patches?
 //	public static final RegistryObject<Block> BROWN_MUSHROOM = BLOCKS.register("brown_mushroom",
 //			() -> new MushroomBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_BROWN).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((p_50892_) -> {
 //		return 1;

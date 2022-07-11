@@ -1,6 +1,8 @@
 package com.mrbysco.flowerpatch.handler;
 
+import com.mrbysco.flowerpatch.FlowerPatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
+import com.mrbysco.flowerpatch.config.PatchConfig;
 import com.mrbysco.flowerpatch.registry.PatchRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
@@ -9,6 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event.Result;
 
@@ -37,6 +40,32 @@ public class PlaceHandler {
 					}
 					newState = state.setValue(FlowerPatchBlock.FLOWERS, Math.min(4, state.getValue(FlowerPatchBlock.FLOWERS) + 1));
 				}
+				level.setBlockAndUpdate(pos, newState);
+				level.playSound((Player) null, pos, newState.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
+				if (!player.getAbilities().instabuild) {
+					stack.shrink(1);
+				}
+				event.setCanceled(true);
+			}
+		}
+	}
+
+
+	public static void onBonemeal(BonemealEvent event) {
+		final Level level = event.getWorld();
+		final BlockPos pos = event.getPos();
+		final BlockState state = event.getBlock();
+		final ItemStack stack = event.getStack();
+		final Player player = event.getPlayer();
+
+		if (PatchConfig.COMMON.flowerToPatchBonemealing.get() &&
+				state.is(FlowerPatch.BONEMEAL_ABLE_FLOWERS) && stack.is(FlowerPatch.BONEMEAL)) {
+			Optional<FlowerPatchBlock> flowerPatchOptional = PatchRegistry.BLOCKS.getEntries().stream().filter(object -> object.get() instanceof FlowerPatchBlock flowerPatchBlock &&
+					state.is(flowerPatchBlock.getFlowerDelegate().get())).map(object -> (FlowerPatchBlock) object.get()).findFirst();
+
+			if (flowerPatchOptional.isPresent()) {
+				FlowerPatchBlock patchBlock = flowerPatchOptional.get();
+				BlockState newState = patchBlock.defaultBlockState();
 				level.setBlockAndUpdate(pos, newState);
 				level.playSound((Player) null, pos, newState.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
 				if (!player.getAbilities().instabuild) {

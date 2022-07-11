@@ -10,9 +10,12 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.LootTable.Builder;
@@ -54,7 +57,9 @@ public class PatchDatagen {
 
 		if (event.includeServer()) {
 			generator.addProvider(event.includeServer(), new Loots(generator));
-			generator.addProvider(event.includeServer(), new PatchBlockTags(generator, helper));
+			BlockTagsProvider provider;
+			generator.addProvider(event.includeServer(), provider = new PatchBlockTags(generator, helper));
+			generator.addProvider(event.includeServer(), new PatchItemTags(generator, provider, helper));
 		}
 		if (event.includeClient()) {
 			generator.addProvider(event.includeClient(), new Language(generator));
@@ -187,6 +192,7 @@ public class PatchDatagen {
 	}
 
 	public static class PatchBlockTags extends BlockTagsProvider {
+
 		public PatchBlockTags(DataGenerator generator, @Nullable ExistingFileHelper existingFileHelper) {
 			super(generator, FlowerPatch.MOD_ID, existingFileHelper);
 		}
@@ -198,6 +204,21 @@ public class PatchDatagen {
 					this.tag(BlockTags.FLOWERS).add(flowerPatchBlock);
 				}
 			}
+
+			this.tag(FlowerPatch.BONEMEAL_ABLE_FLOWERS).add(Blocks.DANDELION, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM,
+					Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP,
+					Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY);
+		}
+	}
+
+	public static class PatchItemTags extends ItemTagsProvider {
+		public PatchItemTags(DataGenerator dataGenerator, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
+			super(dataGenerator, blockTagsProvider, FlowerPatch.MOD_ID, existingFileHelper);
+		}
+
+		@Override
+		protected void addTags() {
+			this.tag(FlowerPatch.BONEMEAL).add(Items.BONE_MEAL);
 		}
 	}
 }

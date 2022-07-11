@@ -33,12 +33,12 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
 		VoxelShape voxelshape = this.getShape(state, level, pos, CollisionContext.empty());
 		Vec3 vec3 = voxelshape.bounds().getCenter();
-		double d0 = (double)pos.getX() + vec3.x;
-		double d1 = (double)pos.getZ() + vec3.z;
+		double d0 = (double) pos.getX() + vec3.x;
+		double d1 = (double) pos.getZ() + vec3.z;
 
-		for(int i = 0; i < 3; ++i) {
+		for (int i = 0; i < 3; ++i) {
 			if (randomSource.nextBoolean()) {
-				level.addParticle(ParticleTypes.SMOKE, d0 + randomSource.nextDouble() / 5.0D, (double)pos.getY() + (0.5D - randomSource.nextDouble()), d1 + randomSource.nextDouble() / 5.0D, 0.0D, 0.0D, 0.0D);
+				level.addParticle(ParticleTypes.SMOKE, d0 + randomSource.nextDouble() / 5.0D, (double) pos.getY() + (0.5D - randomSource.nextDouble()), d1 + randomSource.nextDouble() / 5.0D, 0.0D, 0.0D, 0.0D);
 			}
 		}
 	}
@@ -46,11 +46,16 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (!level.isClientSide && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity) {
-				LivingEntity livingentity = (LivingEntity)entity;
+				LivingEntity livingentity = (LivingEntity) entity;
 				if (!livingentity.isInvulnerableTo(DamageSource.WITHER)) {
 					livingentity.addEffect(new MobEffectInstance(MobEffects.WITHER, 40));
 				}
 			}
 		}
+	}
+
+	@Override
+	public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClient) {
+		return false;
 	}
 }
