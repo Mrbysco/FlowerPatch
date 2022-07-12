@@ -1,7 +1,6 @@
 package com.mrbysco.flowerpatch;
 
 import com.mojang.logging.LogUtils;
-import com.mrbysco.flowerpatch.client.ClientHandler;
 import com.mrbysco.flowerpatch.config.PatchConfig;
 import com.mrbysco.flowerpatch.handler.PlaceHandler;
 import com.mrbysco.flowerpatch.registry.PatchRegistry;
@@ -11,10 +10,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -36,9 +33,5 @@ public class FlowerPatch {
 
 		MinecraftForge.EVENT_BUS.addListener(PlaceHandler::onBlockInteraction);
 		MinecraftForge.EVENT_BUS.addListener(PlaceHandler::onBonemeal);
-
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
-			eventBus.addListener(ClientHandler::onClientSetup);
-		});
 	}
 }

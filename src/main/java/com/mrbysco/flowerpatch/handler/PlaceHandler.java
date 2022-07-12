@@ -20,10 +20,10 @@ import java.util.Optional;
 
 public class PlaceHandler {
 	public static void onBlockInteraction(PlayerInteractEvent.RightClickBlock event) {
-		final Level level = event.getWorld();
+		final Level level = event.getLevel();
 		final BlockPos pos = event.getPos();
 		final BlockState state = level.getBlockState(pos);
-		final Player player = event.getPlayer();
+		final Player player = event.getEntity();
 		final ItemStack stack = player.getItemInHand(event.getHand());
 		if ((state.is(BlockTags.FLOWERS) && state.getBlock().asItem().equals(stack.getItem())) ||
 				(state.getBlock() instanceof FlowerPatchBlock flowerPatchBlock && flowerPatchBlock.getFlowerDelegate().get().asItem().equals(stack.getItem()))) {
@@ -52,11 +52,11 @@ public class PlaceHandler {
 
 
 	public static void onBonemeal(BonemealEvent event) {
-		final Level level = event.getWorld();
+		final Level level = event.getLevel();
 		final BlockPos pos = event.getPos();
 		final BlockState state = event.getBlock();
 		final ItemStack stack = event.getStack();
-		final Player player = event.getPlayer();
+		final Player player = event.getEntity();
 
 		if (PatchConfig.COMMON.flowerToPatchBonemealing.get() &&
 				state.is(FlowerPatch.BONEMEAL_ABLE_FLOWERS) && stack.is(FlowerPatch.BONEMEAL)) {
