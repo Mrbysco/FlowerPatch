@@ -1,0 +1,6 @@
+{
+  "parent": "flowerpatch:block/patch3",
+  "textures": {
+	"cross": "minecraft:block/poppy"
+  }
+}

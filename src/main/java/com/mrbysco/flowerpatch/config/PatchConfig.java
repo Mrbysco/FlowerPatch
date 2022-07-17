@@ -1,36 +1,23 @@
 package com.mrbysco.flowerpatch.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import org.apache.commons.lang3.tuple.Pair;
+import com.mrbysco.flowerpatch.FlowerPatch;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
-public class PatchConfig {
-	public static class Common {
-		public final BooleanValue flowerToPatchBonemealing;
-		public final BooleanValue patchBonemealing;
+@Config(name = FlowerPatch.MOD_ID)
+public class PatchConfig implements ConfigData {
 
-		Common(ForgeConfigSpec.Builder builder) {
-			builder.comment("General settings")
-					.push("General");
+	@CollapsibleObject
+	public General general = new General();
 
-			flowerToPatchBonemealing = builder
-					.comment("Allows flowers to be bonemealed into flower patches [Default: true]")
-					.define("flowerToPatchBonemealing", true);
+	public static class General {
 
-			patchBonemealing = builder
-					.comment("Allows flowers patches to be bonemealed to add more flowers [Default: true]")
-					.define("patchBonemealing", true);
+		@Comment("Allows flowers to be bonemealed into flower patches [Default: true]")
+		public boolean flowerToPatchBonemealing = true;
 
-			builder.pop();
-		}
-	}
-
-	public static final ForgeConfigSpec commonSpec;
-	public static final Common COMMON;
-
-	static {
-		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
-		commonSpec = specPair.getRight();
-		COMMON = specPair.getLeft();
+		@Comment("Allows flowers patches to be bonemealed to add more flowers [Default: true]")
+		public boolean patchBonemealing = true;
 	}
 }

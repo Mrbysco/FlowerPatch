@@ -1,7 +1,0 @@
-{
-  "parent": "flowerpatch:block/patch4",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "cross": "minecraft:block/poppy"
-  }
-}

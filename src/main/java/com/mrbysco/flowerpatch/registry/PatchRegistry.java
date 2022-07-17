@@ -3,55 +3,54 @@ package com.mrbysco.flowerpatch.registry;
 import com.mrbysco.flowerpatch.FlowerPatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.block.WitherRosePatchBlock;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PatchRegistry {
-	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, FlowerPatch.MOD_ID);
+	public static void loadClass() {
 
-	public static final RegistryObject<Block> DANDELION_PATCH = BLOCKS.register("dandelion_patch", () ->
-			new FlowerPatchBlock(MobEffects.SATURATION, 7, () -> Blocks.DANDELION, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> POPPY_PATCH = BLOCKS.register("poppy_patch", () ->
-			new FlowerPatchBlock(MobEffects.NIGHT_VISION, 5, () -> Blocks.POPPY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> BLUE_ORCHID_PATCH = BLOCKS.register("blue_orchid_patch", () ->
-			new FlowerPatchBlock(MobEffects.SATURATION, 7, () -> Blocks.BLUE_ORCHID, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> ALLIUM_PATCH = BLOCKS.register("allium_patch", () ->
-			new FlowerPatchBlock(MobEffects.FIRE_RESISTANCE, 4, () -> Blocks.ALLIUM, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> AZURE_BLUET_PATCH = BLOCKS.register("azure_bluet_patch", () ->
-			new FlowerPatchBlock(MobEffects.BLINDNESS, 8, () -> Blocks.AZURE_BLUET, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> RED_TULIP_PATCH = BLOCKS.register("red_tulip_patch", () ->
-			new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.RED_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> ORANGE_TULIP_PATCH = BLOCKS.register("orange_tulip_patch", () ->
-			new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.ORANGE_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> WHITE_TULIP_PATCH = BLOCKS.register("white_tulip_patch", () ->
-			new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.WHITE_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> PINK_TULIP_PATCH = BLOCKS.register("pink_tulip_patch", () ->
-			new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.PINK_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> OXEYE_DAISY_PATCH = BLOCKS.register("oxeye_daisy_patch", () ->
-			new FlowerPatchBlock(MobEffects.REGENERATION, 8, () -> Blocks.OXEYE_DAISY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> CORNFLOWER_PATCH = BLOCKS.register("cornflower_patch", () ->
-			new FlowerPatchBlock(MobEffects.JUMP, 6, () -> Blocks.CORNFLOWER, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> WITHER_ROSE_PATCH = BLOCKS.register("wither_rose_patch", () ->
-			new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
-	public static final RegistryObject<Block> LILY_OF_THE_VALLEY_PATCH = BLOCKS.register("lily_of_the_valley_patch", () ->
-			new FlowerPatchBlock(MobEffects.POISON, 12, () -> Blocks.LILY_OF_THE_VALLEY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	}
+
+	public static List<Block> BLOCKS = new ArrayList<>();
+
+	public static final Block DANDELION_PATCH = registerBlock("dandelion_patch", new FlowerPatchBlock(MobEffects.SATURATION, 7, () -> Blocks.DANDELION, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block POPPY_PATCH = registerBlock("poppy_patch", new FlowerPatchBlock(MobEffects.NIGHT_VISION, 5, () -> Blocks.POPPY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block BLUE_ORCHID_PATCH = registerBlock("blue_orchid_patch", new FlowerPatchBlock(MobEffects.SATURATION, 7, () -> Blocks.BLUE_ORCHID, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block ALLIUM_PATCH = registerBlock("allium_patch", new FlowerPatchBlock(MobEffects.FIRE_RESISTANCE, 4, () -> Blocks.ALLIUM, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block AZURE_BLUET_PATCH = registerBlock("azure_bluet_patch", new FlowerPatchBlock(MobEffects.BLINDNESS, 8, () -> Blocks.AZURE_BLUET, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block RED_TULIP_PATCH = registerBlock("red_tulip_patch", new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.RED_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block ORANGE_TULIP_PATCH = registerBlock("orange_tulip_patch", new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.ORANGE_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block WHITE_TULIP_PATCH = registerBlock("white_tulip_patch", new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.WHITE_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block PINK_TULIP_PATCH = registerBlock("pink_tulip_patch", new FlowerPatchBlock(MobEffects.WEAKNESS, 9, () -> Blocks.PINK_TULIP, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block OXEYE_DAISY_PATCH = registerBlock("oxeye_daisy_patch", new FlowerPatchBlock(MobEffects.REGENERATION, 8, () -> Blocks.OXEYE_DAISY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block CORNFLOWER_PATCH = registerBlock("cornflower_patch", new FlowerPatchBlock(MobEffects.JUMP, 6, () -> Blocks.CORNFLOWER, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block WITHER_ROSE_PATCH = registerBlock("wither_rose_patch", new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final Block LILY_OF_THE_VALLEY_PATCH = registerBlock("lily_of_the_valley_patch", new FlowerPatchBlock(MobEffects.POISON, 12, () -> Blocks.LILY_OF_THE_VALLEY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 
 //	TODO: Mushroom Patches?
-//	public static final RegistryObject<Block> BROWN_MUSHROOM = BLOCKS.register("brown_mushroom",
+//	public static final Block BROWN_MUSHROOM = registerBlock("brown_mushroom",
 //			() -> new MushroomBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_BROWN).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((p_50892_) -> {
 //		return 1;
 //	}).hasPostProcess(Blocks::always), () -> {
 //		return TreeFeatures.HUGE_BROWN_MUSHROOM;
 //	}));
-//	public static final RegistryObject<Block> RED_MUSHROOM = BLOCKS.register("red_mushroom",
+//	public static final Block RED_MUSHROOM = registerBlock("red_mushroom",
 //			() -> new MushroomBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_RED).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).hasPostProcess(Blocks::always), () -> {
 //		return TreeFeatures.HUGE_RED_MUSHROOM;
 //	}));
+
+	public static Block registerBlock(String name, Block block) {
+		Block registeredBlock = Registry.register(Registry.BLOCK, new ResourceLocation(FlowerPatch.MOD_ID, name), block);
+		BLOCKS.add(registeredBlock);
+		return registeredBlock;
+	}
 }

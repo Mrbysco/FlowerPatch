@@ -1,0 +1,6 @@
+{
+  "parent": "flowerpatch:block/patch4",
+  "textures": {
+	"cross": "minecraft:block/white_tulip"
+  }
+}
