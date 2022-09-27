@@ -29,6 +29,7 @@ public class FlowerPatch {
 	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = BlockTags.create(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal_able_flowers"));
 	public static final TagKey<Item> BONEMEAL = ItemTags.create(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal"));
 
+
 	public FlowerPatch() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PatchConfig.commonSpec);
