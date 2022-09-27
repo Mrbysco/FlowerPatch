@@ -1,15 +1,15 @@
 {
-  "block.flowerpatch.allium_patch": "block.minecraft.allium Patch",
-  "block.flowerpatch.azure_bluet_patch": "block.minecraft.azure_bluet Patch",
-  "block.flowerpatch.blue_orchid_patch": "block.minecraft.blue_orchid Patch",
-  "block.flowerpatch.cornflower_patch": "block.minecraft.cornflower Patch",
-  "block.flowerpatch.dandelion_patch": "block.minecraft.dandelion Patch",
-  "block.flowerpatch.lily_of_the_valley_patch": "block.minecraft.lily_of_the_valley Patch",
-  "block.flowerpatch.orange_tulip_patch": "block.minecraft.orange_tulip Patch",
-  "block.flowerpatch.oxeye_daisy_patch": "block.minecraft.oxeye_daisy Patch",
-  "block.flowerpatch.pink_tulip_patch": "block.minecraft.pink_tulip Patch",
-  "block.flowerpatch.poppy_patch": "block.minecraft.poppy Patch",
-  "block.flowerpatch.red_tulip_patch": "block.minecraft.red_tulip Patch",
-  "block.flowerpatch.white_tulip_patch": "block.minecraft.white_tulip Patch",
-  "block.flowerpatch.wither_rose_patch": "block.minecraft.wither_rose Patch"
+  "block.flowerpatch.allium_patch": "Allium Patch",
+  "block.flowerpatch.azure_bluet_patch": "Azure Bluet Patch",
+  "block.flowerpatch.blue_orchid_patch": "Blue Orchid Patch",
+  "block.flowerpatch.cornflower_patch": "Cornflower Patch",
+  "block.flowerpatch.dandelion_patch": "Dandelion Patch",
+  "block.flowerpatch.lily_of_the_valley_patch": "Lily of the Valley Patch",
+  "block.flowerpatch.orange_tulip_patch": "Orange Tulip Patch",
+  "block.flowerpatch.oxeye_daisy_patch": "Oxeye Daisy Patch",
+  "block.flowerpatch.pink_tulip_patch": "Pink Tulip Patch",
+  "block.flowerpatch.poppy_patch": "Poppy Patch",
+  "block.flowerpatch.red_tulip_patch": "Red Tulip Patch",
+  "block.flowerpatch.white_tulip_patch": "White Tulip Patch",
+  "block.flowerpatch.wither_rose_patch": "Wither Rose Patch"
 }

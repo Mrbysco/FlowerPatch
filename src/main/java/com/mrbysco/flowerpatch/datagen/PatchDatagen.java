@@ -6,6 +6,7 @@ import com.mrbysco.flowerpatch.FlowerPatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.registry.PatchRegistry;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.data.loot.LootTableProvider;
@@ -114,7 +115,7 @@ public class PatchDatagen {
 		protected void addTranslations() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.addBlock(registryObject, ForgeI18n.parseFormat(flowerPatchBlock.getFlowerDelegate().get().getDescriptionId()) + " Patch");
+					this.addBlock(registryObject, I18n.get(flowerPatchBlock.getFlowerDelegate().get().getDescriptionId()) + " Patch");
 				}
 			}
 		}
