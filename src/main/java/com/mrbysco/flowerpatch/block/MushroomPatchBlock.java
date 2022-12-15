@@ -8,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.MushroomBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -30,7 +31,7 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	private final Supplier<Block> mushroomDelegate;
 
 	public MushroomPatchBlock(Supplier<Block> mushroomSupplier, Properties properties) {
-		super(properties, () -> null);
+		super(properties, null);
 		this.mushroomDelegate = mushroomSupplier;
 		this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, Integer.valueOf(2)));
 	}
@@ -79,7 +80,7 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader blockGetter, BlockPos pos, BlockState state, boolean isClient) {
 		return false;
 	}
 

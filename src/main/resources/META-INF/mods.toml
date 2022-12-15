@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="[44,)"
 issueTrackerURL="https://github.com/Mrbysco/FlowerPatch/issues"
 license="MIT"
 
@@ -15,12 +15,6 @@ Allows you to combine multiple of the same flower similar to how you can have mu
 [[dependencies.flowerpatch]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19,1.20)"
-ordering="NONE"
-side="BOTH"
-[[dependencies.flowerpatch]]
-modId="forge"
-mandatory=true
-versionRange="[41.0.95,)"
+versionRange="[1.19.3,1.20)"
 ordering="NONE"
 side="BOTH"
