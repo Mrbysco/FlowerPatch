@@ -2,8 +2,10 @@ package com.mrbysco.flowerpatch.registry;
 
 import com.mrbysco.flowerpatch.FlowerPatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
+import com.mrbysco.flowerpatch.block.MushroomPatchBlock;
 import com.mrbysco.flowerpatch.block.WitherRosePatchBlock;
 import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
@@ -11,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,20 +39,11 @@ public class PatchRegistry {
 	public static final Block WITHER_ROSE_PATCH = registerBlock("wither_rose_patch", new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 	public static final Block LILY_OF_THE_VALLEY_PATCH = registerBlock("lily_of_the_valley_patch", new FlowerPatchBlock(MobEffects.POISON, 12, () -> Blocks.LILY_OF_THE_VALLEY, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 
-//	TODO: Mushroom Patches?
-//	public static final Block BROWN_MUSHROOM = registerBlock("brown_mushroom",
-//			() -> new MushroomBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_BROWN).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((p_50892_) -> {
-//		return 1;
-//	}).hasPostProcess(Blocks::always), () -> {
-//		return TreeFeatures.HUGE_BROWN_MUSHROOM;
-//	}));
-//	public static final Block RED_MUSHROOM = registerBlock("red_mushroom",
-//			() -> new MushroomBlock(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_RED).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).hasPostProcess(Blocks::always), () -> {
-//		return TreeFeatures.HUGE_RED_MUSHROOM;
-//	}));
+	public static final Block BROWN_MUSHROOM_PATCH = registerBlock("brown_mushroom_patch", new MushroomPatchBlock(() -> Blocks.BROWN_MUSHROOM, BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_BROWN).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 1).hasPostProcess((state, getter, pos) -> true)));
+	public static final Block RED_MUSHROOM_PATCH = registerBlock("red_mushroom_patch", new MushroomPatchBlock(() -> Blocks.RED_MUSHROOM, BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_RED).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).hasPostProcess((state, getter, pos) -> true)));
 
 	public static Block registerBlock(String name, Block block) {
-		Block registeredBlock = Registry.register(Registry.BLOCK, new ResourceLocation(FlowerPatch.MOD_ID, name), block);
+		Block registeredBlock = Registry.register(BuiltInRegistries.BLOCK, new ResourceLocation(FlowerPatch.MOD_ID, name), block);
 		BLOCKS.add(registeredBlock);
 		return registeredBlock;
 	}

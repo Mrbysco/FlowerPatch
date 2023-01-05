@@ -21,5 +21,7 @@ public class FlowerPatchClient implements ClientModInitializer {
 		BlockRenderLayerMap.INSTANCE.putBlock(PatchRegistry.CORNFLOWER_PATCH, RenderType.cutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(PatchRegistry.WITHER_ROSE_PATCH, RenderType.cutout());
 		BlockRenderLayerMap.INSTANCE.putBlock(PatchRegistry.LILY_OF_THE_VALLEY_PATCH, RenderType.cutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(PatchRegistry.BROWN_MUSHROOM_PATCH, RenderType.cutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(PatchRegistry.RED_MUSHROOM_PATCH, RenderType.cutout());
 	}
 }

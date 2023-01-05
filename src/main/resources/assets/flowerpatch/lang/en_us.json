@@ -11,5 +11,9 @@
   "block.flowerpatch.poppy_patch": "block.minecraft.poppy Patch",
   "block.flowerpatch.red_tulip_patch": "block.minecraft.red_tulip Patch",
   "block.flowerpatch.white_tulip_patch": "block.minecraft.white_tulip Patch",
-  "block.flowerpatch.wither_rose_patch": "block.minecraft.wither_rose Patch"
+  "block.flowerpatch.wither_rose_patch": "block.minecraft.wither_rose Patch",
+
+  "text.autoconfig.flowerpatch.option.general": "General",
+  "text.autoconfig.flowerpatch.option.general.flowerToPatchBonemealing": "Flower To Patch Bonemealing",
+  "text.autoconfig.flowerpatch.option.general.patchBonemealing": "Patch Bonemealing"
 }

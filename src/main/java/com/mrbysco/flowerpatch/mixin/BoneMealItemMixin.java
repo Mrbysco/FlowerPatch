@@ -27,7 +27,8 @@ public class BoneMealItemMixin {
 		if (FlowerPatch.config == null) FlowerPatch.config = AutoConfig.getConfigHolder(PatchConfig.class).getConfig();
 
 		if (FlowerPatch.config.general.flowerToPatchBonemealing && state.is(FlowerPatch.BONEMEAL_ABLE_FLOWERS) && stack.is(FlowerPatch.BONEMEAL)) {
-			Optional<FlowerPatchBlock> flowerPatchOptional = PatchRegistry.BLOCKS.stream().filter(block -> block instanceof FlowerPatchBlock flowerPatchBlock && state.is(flowerPatchBlock.getFlowerDelegate().get())).map(block -> (FlowerPatchBlock) block).findFirst();
+			Optional<FlowerPatchBlock> flowerPatchOptional = PatchRegistry.BLOCKS.stream().filter(object -> object instanceof FlowerPatchBlock flowerPatchBlock &&
+					state.is(flowerPatchBlock.getPatchDelegate().get())).map(object -> (FlowerPatchBlock) object).findFirst();
 
 			if (flowerPatchOptional.isPresent()) {
 				FlowerPatchBlock patchBlock = flowerPatchOptional.get();
