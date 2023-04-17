@@ -219,7 +219,7 @@ public class PatchDatagen {
 
 	public static class PatchItemTags extends ItemTagsProvider {
 		public PatchItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
-			super(packOutput, lookupProvider, blockTagsProvider, Constants.MOD_ID, existingFileHelper);
+			super(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), Constants.MOD_ID, existingFileHelper);
 		}
 
 		@Override

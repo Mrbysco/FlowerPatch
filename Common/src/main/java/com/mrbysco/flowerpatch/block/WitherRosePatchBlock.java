@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -48,7 +47,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 		if (!level.isClientSide && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingentity = (LivingEntity) entity;
-				if (!livingentity.isInvulnerableTo(DamageSource.WITHER)) {
+				if (!livingentity.isInvulnerableTo(entity.damageSources().wither())) {
 					livingentity.addEffect(new MobEffectInstance(MobEffects.WITHER, 40));
 				}
 			}
