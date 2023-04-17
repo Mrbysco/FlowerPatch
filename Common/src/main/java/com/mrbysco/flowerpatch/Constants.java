@@ -1,6 +1,6 @@
 package com.mrbysco.flowerpatch;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -14,8 +14,8 @@ public class Constants {
 	public static final String MOD_NAME = "Flower Patch";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = TagKey.create(Registry.BLOCK_REGISTRY, new ResourceLocation(MOD_ID, "bonemeal_able_flowers"));
+	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = TagKey.create(Registries.BLOCK, new ResourceLocation(MOD_ID, "bonemeal_able_flowers"));
 
-	public static final TagKey<Item> BONEMEAL = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(MOD_ID, "bonemeal"));
+	public static final TagKey<Item> BONEMEAL = TagKey.create(Registries.ITEM, new ResourceLocation(MOD_ID, "bonemeal"));
 
 }

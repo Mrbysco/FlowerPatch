@@ -1,1 +1,1 @@
-* Code overhaul to more easily release both a forge and a fabric version
+* Initial update to 1.19.3

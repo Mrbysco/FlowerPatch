@@ -4,7 +4,7 @@ import com.mrbysco.flowerpatch.Constants;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.block.MushroomPatchBlock;
 import com.mrbysco.flowerpatch.block.WitherRosePatchBlock;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
 public class PatchRegistry {
-	public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registry.BLOCK_REGISTRY, Constants.MOD_ID);
+	public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
 
 	public static final RegistryObject<Block> DANDELION_PATCH = BLOCKS.register("dandelion_patch", () ->
 			new FlowerPatchBlock(MobEffects.SATURATION, 7, () -> Blocks.DANDELION, BlockBehaviour.Properties.of(Material.PLANT).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
