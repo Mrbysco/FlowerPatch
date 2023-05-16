@@ -1,1 +1,1 @@
-* Code overhaul to more easily release both a forge and a fabric version
+* Add a config option that allows flower placement on Leaves
