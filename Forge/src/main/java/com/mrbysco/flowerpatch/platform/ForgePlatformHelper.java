@@ -14,4 +14,9 @@ public class ForgePlatformHelper implements IPlatformHelper {
 	public boolean flowerToPatchBonemealing() {
 		return PatchConfigForge.COMMON.flowerToPatchBonemealing.get();
 	}
+
+	@Override
+	public boolean placeOnLeaves() {
+		return PatchConfigForge.COMMON.placeOnLeaves.get();
+	}
 }

@@ -18,5 +18,8 @@ public class PatchConfigFabric implements ConfigData {
 
 		@Comment("Allows flowers patches to be bonemealed to add more flowers [Default: true]")
 		public boolean patchBonemealing = true;
+
+		@Comment("Allows flowers and other bush-like blocks to be place-able on leaves [Default: true]")
+		public boolean placeOnLeaves = true;
 	}
 }

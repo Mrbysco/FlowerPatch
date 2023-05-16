@@ -8,6 +8,7 @@ public class PatchConfigForge {
 	public static class Common {
 		public final BooleanValue flowerToPatchBonemealing;
 		public final BooleanValue patchBonemealing;
+		public final BooleanValue placeOnLeaves;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -20,6 +21,10 @@ public class PatchConfigForge {
 			patchBonemealing = builder
 					.comment("Allows flowers patches to be bonemealed to add more flowers [Default: true]")
 					.define("patchBonemealing", true);
+
+			placeOnLeaves = builder
+					.comment("Allows flowers and other bush-like blocks to be place-able on leaves [Default: true]")
+					.define("placeOnLeaves", true);
 
 			builder.pop();
 		}
