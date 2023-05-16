@@ -14,4 +14,9 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public boolean flowerToPatchBonemealing() {
 		return FlowerPatchFabric.config.get().general.flowerToPatchBonemealing;
 	}
+
+	@Override
+	public boolean placeOnLeaves() {
+		return FlowerPatchFabric.config.get().general.placeOnLeaves;
+	}
 }

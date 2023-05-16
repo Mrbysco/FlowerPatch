@@ -11,4 +11,9 @@ public interface IPlatformHelper {
 	 * Returns if flower to patch bonemealing has been enabled in the config
 	 */
 	boolean flowerToPatchBonemealing();
+
+	/**
+	 * Returns if bush-like blocks should be place-able on leaf blocks
+	 */
+	boolean placeOnLeaves();
 }
