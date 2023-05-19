@@ -1,1 +1,1 @@
-* Add a config option that allows flower placement on Leaves
+* Stop worldgen from placing bushes on leaves
