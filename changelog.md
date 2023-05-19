@@ -1,1 +1,1 @@
-* Add an option that allows placement of bush-blocks on leaves blocks
+* Stop worldgen from placing bushes on leaves
