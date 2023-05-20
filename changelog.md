@@ -1,1 +1,1 @@
-* Stop worldgen from placing bushes on leaves
+* Add zh_cn translation courtesy of [NumberSir](https://github.com/NumberSir)
