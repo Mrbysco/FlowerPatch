@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "flowerpatch",
+  "version": "${version}",
+  "name": "Flower Patch",
+  "description": "Allows you to combine multiple of the same flower similar to how you can have multiple sea pickles and candles in a block space.",
+  "authors": [
+    "Mrbysco",
+    "ShyNieke"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/flower-patch",
+    "sources": "https://github.com/Mrbysco/FlowerPatch",
+    "issues": "https://github.com/Mrbysco/FlowerPatch/issues"
+  },
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mrbysco.flowerpatch.FlowerPatchFabric"
+    ],
+    "client": [
+      "com.mrbysco.flowerpatch.FlowerPatchFabricClient"
+    ],
+    "modmenu": [
+      "com.mrbysco.flowerpatch.config.PatchMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "flowerpatch.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "~1.20",
+    "java": ">=17",
+    "cloth-config": ">=11"
+  }
+}
+

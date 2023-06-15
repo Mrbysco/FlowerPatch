@@ -1,0 +1,20 @@
+modLoader="javafml"
+loaderVersion="[46,)"
+issueTrackerURL="https://github.com/Mrbysco/FlowerPatch/issues"
+license="MIT"
+
+[[mods]]
+modId="flowerpatch"
+version="${file.jarVersion}"
+displayName="Flower Patch"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/flower-patch"
+authors="Mrbysco, ShyNieke"
+description='''
+Allows you to combine multiple of the same flower similar to how you can have multiple sea pickles and candles in a block space.
+'''
+[[dependencies.flowerpatch]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.21)"
+ordering="NONE"
+side="BOTH"
