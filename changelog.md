@@ -1,1 +1,1 @@
-* Add zh_cn translation courtesy of [NumberSir](https://github.com/NumberSir)
+* Fix mushroom patches not rendering correctly
