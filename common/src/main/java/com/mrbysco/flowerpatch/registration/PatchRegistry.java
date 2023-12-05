@@ -40,6 +40,8 @@ public class PatchRegistry {
 			new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, BlockBehaviour.Properties.copy(Blocks.WITHER_ROSE).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 	public static final RegistryObject<Block> LILY_OF_THE_VALLEY_PATCH = BLOCKS.register("lily_of_the_valley_patch", () ->
 			new FlowerPatchBlock(MobEffects.POISON, 12, () -> Blocks.LILY_OF_THE_VALLEY, BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+	public static final RegistryObject<Block> TORCHFLOWER = BLOCKS.register("torchflower", () ->
+			new FlowerPatchBlock(MobEffects.NIGHT_VISION, 5, () -> Blocks.TORCHFLOWER, BlockBehaviour.Properties.copy(Blocks.TORCHFLOWER).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
 
 	public static final RegistryObject<Block> BROWN_MUSHROOM_PATCH = BLOCKS.register("brown_mushroom_patch",
 			() -> new MushroomPatchBlock(() -> Blocks.BROWN_MUSHROOM, BlockBehaviour.Properties.copy(Blocks.BROWN_MUSHROOM).noCollission().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 1).hasPostProcess((state, getter, pos) -> true)));
