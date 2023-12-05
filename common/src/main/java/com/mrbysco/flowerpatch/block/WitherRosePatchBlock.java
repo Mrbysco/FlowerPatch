@@ -55,7 +55,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

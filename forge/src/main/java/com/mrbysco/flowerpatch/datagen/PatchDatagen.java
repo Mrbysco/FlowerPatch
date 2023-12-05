@@ -8,6 +8,7 @@ import com.mrbysco.flowerpatch.registration.RegistryObject;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -27,18 +28,17 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraftforge.client.model.generators.BlockModelBuilder;
-import net.minecraftforge.client.model.generators.BlockModelProvider;
-import net.minecraftforge.client.model.generators.BlockStateProvider;
-import net.minecraftforge.client.model.generators.ConfiguredModel;
-import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.data.BlockTagsProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.LanguageProvider;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
+import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -118,9 +118,11 @@ public class PatchDatagen {
 				}
 			}
 
+			this.add("text.autoconfig.flowerpatch.title", "Flower Patch");
 			this.add("text.autoconfig.flowerpatch.option.general", "General");
 			this.add("text.autoconfig.flowerpatch.option.general.flowerToPatchBonemealing", "flowerToPatchBonemealing");
 			this.add("text.autoconfig.flowerpatch.option.general.patchBonemealing", "patchBonemealing");
+			this.add("text.autoconfig.flowerpatch.option.general.placeOnLeaves", "placeOnLeaves");
 		}
 	}
 
@@ -139,9 +141,9 @@ public class PatchDatagen {
 		}
 
 		protected void generatePatchState(Block block) {
-			ModelFile patchModel2 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_2"));
-			ModelFile patchModel3 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_3"));
-			ModelFile patchModel4 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_4"));
+			ModelFile patchModel2 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_2"));
+			ModelFile patchModel3 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_3"));
+			ModelFile patchModel4 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_4"));
 			PatchBlock patchBlock = (PatchBlock) block;
 			getVariantBuilder(block)
 					.partialState().with(patchBlock.getProperty(), 2)
@@ -190,9 +192,9 @@ public class PatchDatagen {
 		}
 
 		private BlockModelBuilder patchBlock(Block block, int flowers) {
-			String path = ForgeRegistries.BLOCKS.getKey(block).getPath() + "_" + flowers;
+			String path = BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + flowers;
 			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
-					"cross", mcLoc(BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(((PatchBlock) block).getPatchDelegate().get()).getPath())).renderType("cutout");
+					"cross", mcLoc(BLOCK_FOLDER + "/" + BuiltInRegistries.BLOCK.getKey(((PatchBlock) block).getPatchDelegate().get()).getPath())).renderType("cutout");
 		}
 	}
 

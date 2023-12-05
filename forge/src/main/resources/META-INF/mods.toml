@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[46,)"
+loaderVersion="[1,)"
 issueTrackerURL="https://github.com/Mrbysco/FlowerPatch/issues"
 license="MIT"
 
@@ -13,8 +13,16 @@ description='''
 Allows you to combine multiple of the same flower similar to how you can have multiple sea pickles and candles in a block space.
 '''
 [[dependencies.flowerpatch]]
-modId="minecraft"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.20.2,1.21)"
+ordering = "NONE"
+side = "BOTH"
+[[dependencies.flowerpatch]]
+modId="neoforge"
 mandatory=true
-versionRange="[1.20,1.21)"
+versionRange="[20.2.59-beta,)"
 ordering="NONE"
 side="BOTH"
+[[mixins]]
+config = "flowerpatch.mixins.json"

@@ -6,7 +6,7 @@ import com.mrbysco.flowerpatch.registration.RegistryObject;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientHandler {
 	public static void onClientSetup(final FMLClientSetupEvent event) {

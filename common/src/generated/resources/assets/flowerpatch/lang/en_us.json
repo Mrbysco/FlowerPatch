@@ -17,5 +17,7 @@
   "block.flowerpatch.wither_rose_patch": "Wither Rose Patch",
   "text.autoconfig.flowerpatch.option.general": "General",
   "text.autoconfig.flowerpatch.option.general.flowerToPatchBonemealing": "flowerToPatchBonemealing",
-  "text.autoconfig.flowerpatch.option.general.patchBonemealing": "patchBonemealing"
+  "text.autoconfig.flowerpatch.option.general.patchBonemealing": "patchBonemealing",
+  "text.autoconfig.flowerpatch.option.general.placeOnLeaves": "placeOnLeaves",
+  "text.autoconfig.flowerpatch.title": "Flower Patch"
 }

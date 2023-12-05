@@ -82,7 +82,7 @@ public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state) {
 		return Services.PLATFORM.patchBonemealing() && state.getValue(FLOWERS) < MAX_FLOWERS;
 	}
 

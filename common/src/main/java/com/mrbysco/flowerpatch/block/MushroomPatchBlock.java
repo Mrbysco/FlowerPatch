@@ -78,7 +78,7 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state) {
 		return false;
 	}
 
