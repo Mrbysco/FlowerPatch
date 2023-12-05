@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-15T16:54:53.0282798	Loot Tables
+// 1.20.1	2023-12-05T16:51:36.8982869	Loot Tables
 4f3847dce3af9cb5572f93f7517289525065ab1e data/flowerpatch/loot_tables/blocks/allium_patch.json
 2e55596d91cc90337dd46e788feec99fde698373 data/flowerpatch/loot_tables/blocks/azure_bluet_patch.json
 7027f1cd94631cba2e4a2e842907a52c51618fcb data/flowerpatch/loot_tables/blocks/blue_orchid_patch.json
@@ -12,5 +12,6 @@
 0c4078fd980e870bc28099ab1ed37ac0cbe1bc0c data/flowerpatch/loot_tables/blocks/poppy_patch.json
 de53c526027342c4b5178403e528bedd2d095422 data/flowerpatch/loot_tables/blocks/red_mushroom_patch.json
 8bba9cbd282d0234b85303700920d38c09d2ef16 data/flowerpatch/loot_tables/blocks/red_tulip_patch.json
+1091c036c69d490f2d08ce797084e18b015ba399 data/flowerpatch/loot_tables/blocks/torchflower.json
 189076329020cf8c167cbc790e3d2250c75a1241 data/flowerpatch/loot_tables/blocks/white_tulip_patch.json
 c4c99d27693078a497ea1a5a9fd7305c0f3b7110 data/flowerpatch/loot_tables/blocks/wither_rose_patch.json

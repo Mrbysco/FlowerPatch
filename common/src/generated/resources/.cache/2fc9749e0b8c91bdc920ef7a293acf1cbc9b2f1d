@@ -1,4 +1,4 @@
-// 1.20.1	2023-06-15T16:54:53.0297782	Block Models: flowerpatch
+// 1.20.1	2023-12-05T16:51:36.900286	Block Models: flowerpatch
 49a9eb6dca1e520229c289a3a648bbb31b7e9d35 assets/flowerpatch/models/block/allium_patch_2.json
 49ccf421d92f5ac08ac2523880a1ef6568586aac assets/flowerpatch/models/block/allium_patch_3.json
 5c8656424e379e865c81b4e3453f1494d796ba47 assets/flowerpatch/models/block/allium_patch_4.json
@@ -38,6 +38,9 @@ b011c6a54db50520d1cb8e6acdf1a8f8d52b0642 assets/flowerpatch/models/block/red_mus
 a155910cf6d0ab1e3e25eca0a4f8edd7945c4f99 assets/flowerpatch/models/block/red_tulip_patch_2.json
 0c5d7cbd56705fecac1b5e5e93faac608589a79a assets/flowerpatch/models/block/red_tulip_patch_3.json
 71dd80539c68ed706ef84129c38d47eb7938260f assets/flowerpatch/models/block/red_tulip_patch_4.json
+ad4f12009e64f0998b809860cf33f9b3dcf03c20 assets/flowerpatch/models/block/torchflower_2.json
+c6ea01979438dc0ed89ee54178b879f7b4e09022 assets/flowerpatch/models/block/torchflower_3.json
+7811d474eae3bdfbccf3628615d9092efa70d091 assets/flowerpatch/models/block/torchflower_4.json
 6d14798c4a4bc2892a042489cce467e1e6e649fb assets/flowerpatch/models/block/white_tulip_patch_2.json
 4efb84f230a9274d7c471365a0cbca432a2d0011 assets/flowerpatch/models/block/white_tulip_patch_3.json
 a79727c65220e682b929aba28c04a147f6545ad0 assets/flowerpatch/models/block/white_tulip_patch_4.json
