@@ -29,7 +29,7 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	private final Supplier<Block> mushroomDelegate;
 
 	public MushroomPatchBlock(Supplier<Block> mushroomSupplier, Properties properties) {
-		super(properties, null);
+		super(null, properties);
 		this.mushroomDelegate = mushroomSupplier;
 		this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, Integer.valueOf(2)));
 	}
@@ -73,8 +73,13 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
 		return new ItemStack(mushroomDelegate.get());
+	}
+
+	@Override
+	public boolean growMushroom(ServerLevel serverLevel, BlockPos pos, BlockState state, RandomSource randomSource) {
+		return false;
 	}
 
 	@Override

@@ -77,7 +77,7 @@ public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
+	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
 		return new ItemStack(flowerDelegate.get());
 	}
 

@@ -8,23 +8,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.entity.player.BonemealEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.DistExecutor;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.BonemealEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @Mod(Constants.MOD_ID)
 public class FlowerPatchForge {
 
-	public FlowerPatchForge() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public FlowerPatchForge(IEventBus eventBus) {
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PatchConfigForge.commonSpec);
 
 		CommonClass.init();
@@ -32,9 +29,9 @@ public class FlowerPatchForge {
 		NeoForge.EVENT_BUS.addListener(this::onBlockInteraction);
 		NeoForge.EVENT_BUS.addListener(this::onBonemeal);
 
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> {
+		if (FMLEnvironment.dist.isClient()) {
 			eventBus.addListener(ClientHandler::onClientSetup);
-		});
+		}
 	}
 
 
