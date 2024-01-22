@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "package": "com.mrbysco.flowerpatch.mixin",
+  "refmap": "flowerpatch.refmap.json",
+  "target": "@env(DEFAULT)",
+  "mixins": [
+    "BushBlockMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

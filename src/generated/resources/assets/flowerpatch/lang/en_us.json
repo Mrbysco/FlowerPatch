@@ -2,6 +2,7 @@
   "block.flowerpatch.allium_patch": "block.minecraft.allium Patch",
   "block.flowerpatch.azure_bluet_patch": "block.minecraft.azure_bluet Patch",
   "block.flowerpatch.blue_orchid_patch": "block.minecraft.blue_orchid Patch",
+  "block.flowerpatch.brown_mushroom_patch": "block.minecraft.brown_mushroom Patch",
   "block.flowerpatch.cornflower_patch": "block.minecraft.cornflower Patch",
   "block.flowerpatch.dandelion_patch": "block.minecraft.dandelion Patch",
   "block.flowerpatch.lily_of_the_valley_patch": "block.minecraft.lily_of_the_valley Patch",
@@ -9,6 +10,7 @@
   "block.flowerpatch.oxeye_daisy_patch": "block.minecraft.oxeye_daisy Patch",
   "block.flowerpatch.pink_tulip_patch": "block.minecraft.pink_tulip Patch",
   "block.flowerpatch.poppy_patch": "block.minecraft.poppy Patch",
+  "block.flowerpatch.red_mushroom_patch": "block.minecraft.red_mushroom Patch",
   "block.flowerpatch.red_tulip_patch": "block.minecraft.red_tulip Patch",
   "block.flowerpatch.white_tulip_patch": "block.minecraft.white_tulip Patch",
   "block.flowerpatch.wither_rose_patch": "block.minecraft.wither_rose Patch"

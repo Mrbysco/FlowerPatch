@@ -1,13 +1,14 @@
 package com.mrbysco.flowerpatch.config;
 
+
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class PatchConfig {
 	public static class Common {
-		public final BooleanValue flowerToPatchBonemealing;
-		public final BooleanValue patchBonemealing;
+		public final ForgeConfigSpec.BooleanValue flowerToPatchBonemealing;
+		public final ForgeConfigSpec.BooleanValue patchBonemealing;
+		public final ForgeConfigSpec.BooleanValue placeOnLeaves;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -20,6 +21,10 @@ public class PatchConfig {
 			patchBonemealing = builder
 					.comment("Allows flowers patches to be bonemealed to add more flowers [Default: true]")
 					.define("patchBonemealing", true);
+
+			placeOnLeaves = builder
+					.comment("Allows flowers and other bush-like blocks to be place-able on leaves [Default: true]")
+					.define("placeOnLeaves", true);
 
 			builder.pop();
 		}

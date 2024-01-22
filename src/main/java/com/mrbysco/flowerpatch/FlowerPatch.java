@@ -1,16 +1,15 @@
 package com.mrbysco.flowerpatch;
 
-import com.mojang.logging.LogUtils;
 import com.mrbysco.flowerpatch.client.ClientHandler;
 import com.mrbysco.flowerpatch.config.PatchConfig;
 import com.mrbysco.flowerpatch.handler.PlaceHandler;
 import com.mrbysco.flowerpatch.registry.PatchRegistry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ITag;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -19,15 +18,16 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Mod(FlowerPatch.MOD_ID)
 public class FlowerPatch {
 	public static final String MOD_ID = "flowerpatch";
-	private static final Logger LOGGER = LogUtils.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger();
 
-	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = BlockTags.create(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal_able_flowers"));
-	public static final TagKey<Item> BONEMEAL = ItemTags.create(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal"));
+	public static final ITag.INamedTag<Block> BONEMEAL_ABLE_FLOWERS = BlockTags.bind(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal_able_flowers").toString());
+	public static final ITag.INamedTag<Item> BONEMEAL = ItemTags.bind(new ResourceLocation(FlowerPatch.MOD_ID, "bonemeal").toString());
 
 	public FlowerPatch() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();

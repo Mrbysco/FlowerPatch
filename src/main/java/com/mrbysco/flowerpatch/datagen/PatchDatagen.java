@@ -4,42 +4,41 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import com.mrbysco.flowerpatch.FlowerPatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
+import com.mrbysco.flowerpatch.block.PatchBlock;
 import com.mrbysco.flowerpatch.registry.PatchRegistry;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.loot.BlockLoot;
-import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.data.ItemTagsProvider;
+import net.minecraft.data.LootTableProvider;
+import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.item.Items;
+import net.minecraft.loot.ConstantRange;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootParameterSet;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.ValidationTracker;
+import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.LootPool;
-import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.LootTable.Builder;
-import net.minecraft.world.level.storage.loot.LootTables;
-import net.minecraft.world.level.storage.loot.ValidationContext;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSet;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockModelProvider;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
-import net.minecraftforge.common.ForgeI18n;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.LanguageProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ForgeI18n;
+import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
+import net.minecraftforge.fml.event.lifecycle.GatherDataEvent;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -74,26 +73,27 @@ public class PatchDatagen {
 		}
 
 		@Override
-		protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> getTables() {
+		protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootParameterSet>> getTables() {
 			return ImmutableList.of(
-					Pair.of(PatchBlockLoot::new, LootContextParamSets.BLOCK)
+					Pair.of(PatchBlockLoot::new, LootParameterSets.BLOCK)
 			);
 		}
 
-		public static class PatchBlockLoot extends BlockLoot {
+		public static class PatchBlockLoot extends BlockLootTables {
 
 			@Override
 			protected void addTables() {
 				for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-					if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-						this.add(flowerPatchBlock, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-								.add(applyExplosionDecay(block, LootItem.lootTableItem(flowerPatchBlock.getFlowerDelegate().get())
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 2))))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(3.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 3))))
-										.apply(SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
-												.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 4))))))));
+					if (registryObject.get() instanceof PatchBlock) {
+						PatchBlock patchBlock = (PatchBlock) registryObject.get();
+						this.add(registryObject.get(), (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantRange.exactly(1))
+								.add(applyExplosionDecay(block, ItemLootEntry.lootTableItem(patchBlock.getPatchDelegate().get())
+										.apply(SetCount.setCount(ConstantRange.exactly(2))
+												.when(BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 2))))
+										.apply(SetCount.setCount(ConstantRange.exactly(3))
+												.when(BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 3))))
+										.apply(SetCount.setCount(ConstantRange.exactly(4))
+												.when(BlockStateProperty.hasBlockStateProperties(block).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FlowerPatchBlock.FLOWERS, 4))))))));
 					}
 				}
 			}
@@ -105,8 +105,8 @@ public class PatchDatagen {
 		}
 
 		@Override
-		protected void validate(Map<ResourceLocation, LootTable> map, ValidationContext validationContext) {
-			map.forEach((name, table) -> LootTables.validate(validationContext, name, table));
+		protected void validate(Map<ResourceLocation, LootTable> map, ValidationTracker validationtracker) {
+			map.forEach((name, table) -> table.validate(validationtracker));
 		}
 	}
 
@@ -118,8 +118,9 @@ public class PatchDatagen {
 		@Override
 		protected void addTranslations() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.addBlock(registryObject, ForgeI18n.parseFormat(flowerPatchBlock.getFlowerDelegate().get().getDescriptionId()) + " Patch");
+				if (registryObject.get() instanceof PatchBlock) {
+					PatchBlock patchBlock = (PatchBlock) registryObject.get();
+					this.addBlock(registryObject, ForgeI18n.parseFormat(patchBlock.getPatchDelegate().get().getDescriptionId()) + " Patch");
 				}
 			}
 		}
@@ -133,30 +134,31 @@ public class PatchDatagen {
 		@Override
 		protected void registerStatesAndModels() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.generatePatchState(flowerPatchBlock);
+				if (registryObject.get() instanceof PatchBlock) {
+					this.generatePatchState(registryObject.get());
 				}
 			}
 		}
 
-		protected void generatePatchState(FlowerPatchBlock flowerPatchBlock) {
-			ModelFile patchModel2 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(flowerPatchBlock).getPath() + "_2"));
-			ModelFile patchModel3 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(flowerPatchBlock).getPath() + "_3"));
-			ModelFile patchModel4 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(flowerPatchBlock).getPath() + "_4"));
-			getVariantBuilder(flowerPatchBlock)
-					.partialState().with(FlowerPatchBlock.FLOWERS, 2)
+		protected void generatePatchState(Block block) {
+			ModelFile patchModel2 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_2"));
+			ModelFile patchModel3 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_3"));
+			ModelFile patchModel4 = models().getExistingFile(modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block).getPath() + "_4"));
+			PatchBlock patchBlock = (PatchBlock) block;
+			getVariantBuilder(block)
+					.partialState().with(patchBlock.getProperty(), 2)
 					.addModels(
 							new ConfiguredModel(patchModel2),
 							new ConfiguredModel(patchModel2, 0, 90, false),
 							new ConfiguredModel(patchModel2, 0, 180, false),
 							new ConfiguredModel(patchModel2, 0, 270, false))
-					.partialState().with(FlowerPatchBlock.FLOWERS, 3)
+					.partialState().with(patchBlock.getProperty(), 3)
 					.addModels(
 							new ConfiguredModel(patchModel3),
 							new ConfiguredModel(patchModel3, 0, 90, false),
 							new ConfiguredModel(patchModel3, 0, 180, false),
 							new ConfiguredModel(patchModel3, 0, 270, false))
-					.partialState().with(FlowerPatchBlock.FLOWERS, 4)
+					.partialState().with(patchBlock.getProperty(), 4)
 					.addModels(
 							new ConfiguredModel(patchModel4),
 							new ConfiguredModel(patchModel4, 0, 90, false),
@@ -173,26 +175,26 @@ public class PatchDatagen {
 		@Override
 		protected void registerModels() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.generatePatchModels(flowerPatchBlock);
+				if (registryObject.get() instanceof PatchBlock) {
+					this.generatePatchModels(registryObject.get());
 				}
 			}
 		}
 
-		protected void generatePatchModels(FlowerPatchBlock flowerPatchBlock) {
-			crossBlock(flowerPatchBlock);
+		protected void generatePatchModels(Block block) {
+			crossBlock(block);
 		}
 
-		private void crossBlock(FlowerPatchBlock flowerPatchBlock) {
-			patchBlock(flowerPatchBlock, 2);
-			patchBlock(flowerPatchBlock, 3);
-			patchBlock(flowerPatchBlock, 4);
+		private void crossBlock(Block block) {
+			patchBlock(block, 2);
+			patchBlock(block, 3);
+			patchBlock(block, 4);
 		}
 
-		private BlockModelBuilder patchBlock(FlowerPatchBlock block, int flowers) {
+		private BlockModelBuilder patchBlock(Block block, int flowers) {
 			String path = ForgeRegistries.BLOCKS.getKey(block).getPath() + "_" + flowers;
 			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
-					"cross", mcLoc(BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(block.getFlowerDelegate().get()).getPath()));
+					"cross", mcLoc(BLOCK_FOLDER + "/" + ForgeRegistries.BLOCKS.getKey(((PatchBlock)block).getPatchDelegate().get()).getPath()));
 		}
 	}
 
@@ -205,8 +207,8 @@ public class PatchDatagen {
 		@Override
 		protected void addTags() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.tag(BlockTags.FLOWERS).add(flowerPatchBlock);
+				if (registryObject.get() instanceof FlowerPatchBlock) {
+					this.tag(BlockTags.FLOWERS).add(registryObject.get());
 				}
 			}
 

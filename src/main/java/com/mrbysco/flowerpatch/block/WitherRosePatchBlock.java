@@ -1,38 +1,40 @@
 package com.mrbysco.flowerpatch.block;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.ISelectionContext;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class WitherRosePatchBlock extends FlowerPatchBlock {
-	public WitherRosePatchBlock(MobEffect mobEffect, Supplier<Block> flowerSupplier, Properties properties) {
+	public WitherRosePatchBlock(Effect mobEffect, Supplier<Block> flowerSupplier, Properties properties) {
 		super(mobEffect, 8, flowerSupplier, properties);
 	}
 
-	protected boolean mayPlaceOn(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+	@Override
+	protected boolean mayPlaceOn(BlockState state, IBlockReader blockGetter, BlockPos pos) {
 		return super.mayPlaceOn(state, blockGetter, pos) || state.is(Blocks.NETHERRACK) || state.is(Blocks.SOUL_SAND) || state.is(Blocks.SOUL_SOIL);
 	}
 
-	public void animateTick(BlockState state, Level level, BlockPos pos, Random randomSource) {
-		VoxelShape voxelshape = this.getShape(state, level, pos, CollisionContext.empty());
-		Vec3 vec3 = voxelshape.bounds().getCenter();
+	@Override
+	public void animateTick(BlockState state, World level, BlockPos pos, Random randomSource) {
+		VoxelShape voxelshape = this.getShape(state, level, pos, ISelectionContext.empty());
+		Vector3d vec3 = voxelshape.bounds().getCenter();
 		double d0 = (double) pos.getX() + vec3.x;
 		double d1 = (double) pos.getZ() + vec3.z;
 
@@ -43,19 +45,20 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 		}
 	}
 
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	@Override
+	public void entityInside(BlockState state, World level, BlockPos pos, Entity entity) {
 		if (!level.isClientSide && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity) {
 				LivingEntity livingentity = (LivingEntity) entity;
 				if (!livingentity.isInvulnerableTo(DamageSource.WITHER)) {
-					livingentity.addEffect(new MobEffectInstance(MobEffects.WITHER, 40));
+					livingentity.addEffect(new EffectInstance(Effects.WITHER, 40));
 				}
 			}
 		}
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter blockGetter, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(IBlockReader level, BlockPos pos, BlockState state, boolean b) {
 		return false;
 	}
 }
