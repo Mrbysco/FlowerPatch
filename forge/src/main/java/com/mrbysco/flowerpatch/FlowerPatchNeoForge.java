@@ -1,35 +1,35 @@
 package com.mrbysco.flowerpatch;
 
 import com.mrbysco.flowerpatch.client.ClientHandler;
-import com.mrbysco.flowerpatch.config.PatchConfigForge;
+import com.mrbysco.flowerpatch.config.PatchConfigNeoForge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.Event;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.BonemealEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @Mod(Constants.MOD_ID)
-public class FlowerPatchForge {
+public class FlowerPatchNeoForge {
 
-	public FlowerPatchForge(IEventBus eventBus) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PatchConfigForge.commonSpec);
+	public FlowerPatchNeoForge(IEventBus eventBus, Dist dist, ModContainer container) {
+		container.registerConfig(ModConfig.Type.COMMON, PatchConfigNeoForge.commonSpec);
 
 		CommonClass.init();
 
 		NeoForge.EVENT_BUS.addListener(this::onBlockInteraction);
 		NeoForge.EVENT_BUS.addListener(this::onBonemeal);
 
-		if (FMLEnvironment.dist.isClient()) {
+		if (dist.isClient()) {
 			eventBus.addListener(ClientHandler::onClientSetup);
 		}
 	}

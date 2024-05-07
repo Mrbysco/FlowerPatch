@@ -1,6 +1,7 @@
 package com.mrbysco.flowerpatch.block;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
@@ -22,7 +23,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import java.util.function.Supplier;
 
 public class WitherRosePatchBlock extends FlowerPatchBlock {
-	public WitherRosePatchBlock(MobEffect mobEffect, Supplier<Block> flowerSupplier, Properties properties) {
+	public WitherRosePatchBlock(Holder<MobEffect> mobEffect, Supplier<Block> flowerSupplier, Properties properties) {
 		super(mobEffect, 8, flowerSupplier, properties);
 	}
 

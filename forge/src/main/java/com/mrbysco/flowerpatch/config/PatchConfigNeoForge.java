@@ -4,7 +4,7 @@ import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import org.apache.commons.lang3.tuple.Pair;
 
-public class PatchConfigForge {
+public class PatchConfigNeoForge {
 	public static class Common {
 		public final BooleanValue flowerToPatchBonemealing;
 		public final BooleanValue patchBonemealing;

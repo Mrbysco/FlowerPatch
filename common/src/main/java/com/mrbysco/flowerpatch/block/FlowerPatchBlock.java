@@ -2,6 +2,7 @@ package com.mrbysco.flowerpatch.block;
 
 import com.mrbysco.flowerpatch.platform.Services;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -32,7 +33,7 @@ public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	protected static final VoxelShape FOUR_AABB = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D);
 	private final Supplier<Block> flowerDelegate;
 
-	public FlowerPatchBlock(MobEffect mobEffect, int effectsDuration, Supplier<Block> flowerSupplier, Properties properties) {
+	public FlowerPatchBlock(Holder<MobEffect> mobEffect, int effectsDuration, Supplier<Block> flowerSupplier, Properties properties) {
 		super(mobEffect, effectsDuration, properties);
 		this.flowerDelegate = flowerSupplier;
 		this.registerDefaultState(this.stateDefinition.any().setValue(FLOWERS, Integer.valueOf(2)));
