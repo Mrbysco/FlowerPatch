@@ -16,4 +16,10 @@ public interface IPlatformHelper {
 	 * Returns if bush-like blocks should be place-able on leaf blocks
 	 */
 	boolean placeOnLeaves();
+
+
+	/**
+	 * Check if a mod is installed
+	 */
+	boolean isModLoaded(String modID);
 }
