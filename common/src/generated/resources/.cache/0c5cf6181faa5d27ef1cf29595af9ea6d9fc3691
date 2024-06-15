@@ -1,3 +1,3 @@
-// 1.20.6	2024-05-08T01:24:35.4216497	Tags for minecraft:block mod id flowerpatch
-33db418f63855a8ec6cf681a3e04a0d4e5637335 data/flowerpatch/tags/blocks/bonemeal_able_flowers.json
-b1baa727abf9f3683cfea5462a99dd739aea29f3 data/minecraft/tags/blocks/flowers.json
+// 1.21	2024-06-15T21:00:32.0568862	Tags for minecraft:block mod id flowerpatch
+33db418f63855a8ec6cf681a3e04a0d4e5637335 data/flowerpatch/tags/block/bonemeal_able_flowers.json
+de3d31ead65607006c8475298d6d7ac5e564cde8 data/minecraft/tags/block/flowers.json

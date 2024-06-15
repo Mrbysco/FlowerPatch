@@ -46,8 +46,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
 		if (!level.isClientSide && level.getDifficulty() != Difficulty.PEACEFUL) {
-			if (entity instanceof LivingEntity) {
-				LivingEntity livingentity = (LivingEntity) entity;
+			if (entity instanceof LivingEntity livingentity) {
 				if (!livingentity.isInvulnerableTo(entity.damageSources().wither())) {
 					livingentity.addEffect(new MobEffectInstance(MobEffects.WITHER, 40));
 				}

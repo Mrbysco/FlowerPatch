@@ -54,17 +54,12 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
 		Vec3 vec3 = state.getOffset(blockGetter, pos);
-		switch (state.getValue(MUSHROOMS)) {
-			case 1:
-			default:
-				return ONE_AABB.move(vec3.x, vec3.y, vec3.z);
-			case 2:
-				return TWO_AABB.move(vec3.x, vec3.y, vec3.z);
-			case 3:
-				return THREE_AABB.move(vec3.x, vec3.y, vec3.z);
-			case 4:
-				return FOUR_AABB.move(vec3.x, vec3.y, vec3.z);
-		}
+		return switch (state.getValue(MUSHROOMS)) {
+			default -> ONE_AABB.move(vec3.x, vec3.y, vec3.z);
+			case 2 -> TWO_AABB.move(vec3.x, vec3.y, vec3.z);
+			case 3 -> THREE_AABB.move(vec3.x, vec3.y, vec3.z);
+			case 4 -> FOUR_AABB.move(vec3.x, vec3.y, vec3.z);
+		};
 	}
 
 	@Override
