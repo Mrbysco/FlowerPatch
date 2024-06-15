@@ -15,6 +15,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.TriState;
 import net.neoforged.neoforge.event.entity.player.BonemealEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
@@ -41,7 +42,7 @@ public class FlowerPatchNeoForge {
 		final Player player = event.getEntity();
 		InteractionResult result = CommonClass.onBlockInteraction(level, pos, player, event.getHand());
 		if (result == InteractionResult.FAIL) {
-			event.setUseBlock(Event.Result.DENY);
+			event.setUseBlock(TriState.DEFAULT);
 		}
 		if (result == InteractionResult.SUCCESS) {
 			event.setCanceled(true);
@@ -51,9 +52,9 @@ public class FlowerPatchNeoForge {
 	private void onBonemeal(BonemealEvent event) {
 		final Level level = event.getLevel();
 		final BlockPos pos = event.getPos();
-		final BlockState state = event.getBlock();
+		final BlockState state = event.getState();
 		final ItemStack stack = event.getStack();
-		final Player player = event.getEntity();
+		final Player player = event.getPlayer();
 		InteractionResult result = CommonClass.onBonemeal(level, pos, state, stack, player);
 		if (result == InteractionResult.SUCCESS) {
 			event.setCanceled(true);
