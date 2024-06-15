@@ -21,7 +21,7 @@ side="BOTH"
 [[dependencies.flowerpatch]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[20.6.14-beta,)"
+versionRange="[20.6.115,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]
