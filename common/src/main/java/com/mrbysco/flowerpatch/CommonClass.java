@@ -43,9 +43,7 @@ public class CommonClass {
 				}
 				level.setBlockAndUpdate(pos, newState);
 				level.playSound((Player) null, pos, newState.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
-				if (!player.getAbilities().instabuild) {
-					stack.shrink(1);
-				}
+				stack.consume(1, player);
 				return InteractionResult.SUCCESS;
 			}
 		}
@@ -65,9 +63,7 @@ public class CommonClass {
 				BlockState newState = patchBlock.defaultBlockState();
 				level.setBlockAndUpdate(pos, newState);
 				level.playSound((Player) null, pos, newState.getSoundType().getPlaceSound(), SoundSource.BLOCKS, 1.0F, 1.0F);
-				if (!player.getAbilities().instabuild) {
-					stack.shrink(1);
-				}
+				stack.consume(1, player);
 				return InteractionResult.SUCCESS;
 			}
 		}
