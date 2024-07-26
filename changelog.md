@@ -1,1 +1,1 @@
-* Initial update to 1.21
+* Fix a potential crash if a non-player bonemeals a flower
