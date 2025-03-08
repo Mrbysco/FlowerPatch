@@ -122,6 +122,8 @@ if (System.getenv().CURSEFORGE_KEY) {
 
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
+
+        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
     }
 }
 
@@ -136,5 +138,11 @@ if (System.getenv().MODRINTH_KEY) {
         changelog = file("$project.rootDir/changelog.md").text
         gameVersions = ["${minecraft_version}"]
         loaders = ["neoforge"]
+
+        dependencies {
+            optional.project "oh-the-biomes-weve-gone"
+            optional.project "regions-unexplored"
+            required.project "eternal-starlight"
+        }
     }
 }
