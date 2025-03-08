@@ -50,10 +50,16 @@ runs {
         // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
         programArguments.addAll '--mod', mod_id, '--all', '--output', project(":common").file("src/generated/resources/").getAbsolutePath(),
                 '--existing', file('src/main/resources/').getAbsolutePath(), '--existing', project(":common").file("src/main/resources").getAbsolutePath()
+
+        programArguments.addAll('--existing-mod', "biomeswevegone", '--existing-mod', "eternal_starlight", '--existing-mod', "regions_unexplored")
     }
 }
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
 
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"

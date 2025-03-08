@@ -3,7 +3,12 @@ package com.mrbysco.flowerpatch;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.block.PatchBlock;
 import com.mrbysco.flowerpatch.platform.Services;
+import com.mrbysco.flowerpatch.registration.CompatRegistry;
+import com.mrbysco.flowerpatch.registration.CompatRegistry.BiomesWeveGoneCompat;
+import com.mrbysco.flowerpatch.registration.CompatRegistry.EternalStarlightCompat;
+import com.mrbysco.flowerpatch.registration.CompatRegistry.RegionsUnexploredCompat;
 import com.mrbysco.flowerpatch.registration.PatchRegistry;
+import com.mrbysco.flowerpatch.registration.RegistryObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -20,6 +25,21 @@ import java.util.Optional;
 public class CommonClass {
 	public static void init() {
 		PatchRegistry.loadClass();
+
+		//Compat
+		if (modLoaded("biomeswevegone")) {
+			BiomesWeveGoneCompat.loadClass();
+		}
+		if (modLoaded("eternal_starlight")) {
+			EternalStarlightCompat.loadClass();
+		}
+		if (modLoaded("regions_unexplored")) {
+			RegionsUnexploredCompat.loadClass();
+		}
+	}
+
+	private static boolean modLoaded(String modid) {
+		return Services.PLATFORM.isModLoaded(modid);
 	}
 
 	public static InteractionResult onBlockInteraction(Level level, BlockPos pos, Player player, InteractionHand hand) {
@@ -28,7 +48,11 @@ public class CommonClass {
 		if (state.getBlock().asItem().equals(stack.getItem()) ||
 				(state.getBlock() instanceof PatchBlock patchBlock && patchBlock.getPatchDelegate().get().asItem().equals(stack.getItem()))) {
 			Optional<Block> optionalPatch = PatchRegistry.BLOCKS.getEntries().stream().filter(object -> object.get() instanceof PatchBlock patchBlock &&
-					patchBlock.getPatchDelegate().get().asItem().equals(stack.getItem())).map(object -> object.get()).findFirst();
+					patchBlock.getPatchDelegate().get().asItem().equals(stack.getItem())).map(RegistryObject::get).findFirst();
+			if (optionalPatch.isEmpty()) {
+				optionalPatch = CompatRegistry.BLOCKS.getEntries().stream().filter(object -> object.get() instanceof PatchBlock patchBlock &&
+						patchBlock.getPatchDelegate().get().asItem().equals(stack.getItem())).map(RegistryObject::get).findFirst();
+			}
 
 			if (optionalPatch.isPresent()) {
 				Block block = optionalPatch.get();
