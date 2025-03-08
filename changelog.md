@@ -1,1 +1,1 @@
-* Fix a potential crash if a non-player bonemeals a flower
+* Add support for Eternal Starlight, Oh The Biomes We've Gone and Regions Unexplored
