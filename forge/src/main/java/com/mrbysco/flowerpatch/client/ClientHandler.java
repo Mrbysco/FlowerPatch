@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class ClientHandler {
+	@SuppressWarnings("deprecation")
 	public static void onClientSetup(final FMLClientSetupEvent event) {
 		for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
 			if (registryObject.get() instanceof PatchBlock) {
