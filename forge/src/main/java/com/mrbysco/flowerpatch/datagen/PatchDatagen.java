@@ -1,8 +1,10 @@
 package com.mrbysco.flowerpatch.datagen;
 
 import com.mrbysco.flowerpatch.Constants;
+import com.mrbysco.flowerpatch.block.CompatPatchBlock;
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.block.PatchBlock;
+import com.mrbysco.flowerpatch.registration.CompatRegistry;
 import com.mrbysco.flowerpatch.registration.PatchRegistry;
 import com.mrbysco.flowerpatch.registration.RegistryObject;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
@@ -15,6 +17,7 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
@@ -42,6 +45,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -84,18 +88,30 @@ public class PatchDatagen {
 			protected void generate() {
 				for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
 					if (registryObject.get() instanceof PatchBlock patch) {
-						Block patchBlock = registryObject.get();
-						this.add(patchBlock, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-								.add(applyExplosionDecay(block, LootItem.lootTableItem(patch.getPatchDelegate().get()).apply(List.of(2, 3, 4), (value) ->
-										SetItemCountFunction.setCount(ConstantValue.exactly((float) value.intValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(patchBlock)
-												.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(patch.getProperty(), value))))))));
+						addPatch(patch);
+					}
+				}
+				for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
+					if (registryObject.get() instanceof PatchBlock patch) {
+						add(registryObject.get(), LootTable.lootTable());
 					}
 				}
 			}
 
+			private void addPatch(PatchBlock patch) {
+				this.add((Block) patch, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+						.add(applyExplosionDecay(block, LootItem.lootTableItem(patch.getPatchDelegate().get()).apply(List.of(2, 3, 4), (value) ->
+								SetItemCountFunction.setCount(ConstantValue.exactly(value.floatValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
+										.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(patch.getProperty(), value))))))));
+			}
+
 			@Override
 			protected Iterable<Block> getKnownBlocks() {
-				return (Iterable<Block>) PatchRegistry.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+				List<Block> blocks = new ArrayList<>();
+				PatchRegistry.BLOCKS.getEntries().forEach(object -> blocks.add(object.get()));
+				// Compat blocks
+				CompatRegistry.BLOCKS.getEntries().forEach(object -> blocks.add(object.get()));
+				return (Iterable<Block>) blocks::iterator;
 			}
 		}
 
@@ -117,6 +133,11 @@ public class PatchDatagen {
 					this.addBlock(registryObject, I18n.get(patchBlock.getPatchDelegate().get().getDescriptionId()) + " Patch");
 				}
 			}
+			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
+				if (registryObject.get() instanceof PatchBlock patchBlock) {
+					this.addBlock(registryObject, "%s Patch");
+				}
+			}
 
 			this.add("text.autoconfig.flowerpatch.title", "Flower Patch");
 			this.add("text.autoconfig.flowerpatch.option.general", "General");
@@ -134,6 +155,11 @@ public class PatchDatagen {
 		@Override
 		protected void registerStatesAndModels() {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
+				if (registryObject.get() instanceof PatchBlock) {
+					this.generatePatchState(registryObject.get());
+				}
+			}
+			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof PatchBlock) {
 					this.generatePatchState(registryObject.get());
 				}
@@ -179,6 +205,11 @@ public class PatchDatagen {
 					this.generatePatchModels(registryObject.get());
 				}
 			}
+			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
+				if (registryObject.get() instanceof CompatPatchBlock patchBlock) {
+					this.compatCrossBlock(patchBlock);
+				}
+			}
 		}
 
 		protected void generatePatchModels(Block block) {
@@ -196,6 +227,20 @@ public class PatchDatagen {
 			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
 					"cross", mcLoc(BLOCK_FOLDER + "/" + BuiltInRegistries.BLOCK.getKey(((PatchBlock) block).getPatchDelegate().get()).getPath())).renderType("cutout");
 		}
+
+		private void compatCrossBlock(CompatPatchBlock block) {
+			compatPatchBlock(block, 2);
+			compatPatchBlock(block, 3);
+			compatPatchBlock(block, 4);
+		}
+
+		private BlockModelBuilder compatPatchBlock(CompatPatchBlock block, int flowers) {
+			String path = BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + flowers;
+			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
+					"cross", ResourceLocation.fromNamespaceAndPath(
+							block.getNameSpace(), BLOCK_FOLDER + "/" + block.getTexturePath()))
+					.renderType("cutout");
+		}
 	}
 
 	public static class PatchBlockTags extends BlockTagsProvider {
@@ -212,9 +257,15 @@ public class PatchDatagen {
 				}
 			}
 
+			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
+				if (registryObject.get() instanceof CompatPatchBlock) {
+					this.tag(BlockTags.FLOWERS).addOptional(registryObject.getId());
+				}
+			}
+
 			this.tag(Constants.BONEMEAL_ABLE_FLOWERS).add(Blocks.DANDELION, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM,
 					Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP,
-					Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY, Blocks.TORCHFLOWER);
+					Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY);
 		}
 	}
 
