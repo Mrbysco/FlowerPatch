@@ -1,0 +1,7 @@
+{
+  "parent": "flowerpatch:block/patch3",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "cross": "biomeswevegone:block/orange_daisy"
+  }
+}
