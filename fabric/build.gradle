@@ -111,7 +111,8 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelogType = 'markdown'
 
         mainFile.addRequirement("fabric-api", "cloth-config")
-        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
+//        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
+        mainFile.addOptional("oh-the-biomes-weve-gone")
     }
 }
 
@@ -131,10 +132,10 @@ if (System.getenv().MODRINTH_KEY) {
         dependencies {
             required.project "fabric-api"
             required.project "cloth-config"
-            required.project "eternal-starlight"
 
             optional.project "oh-the-biomes-weve-gone"
-            optional.project "regions-unexplored"
+//            optional.project "regions-unexplored"
+//            optional.project "eternal-starlight"
         }
     }
 }

@@ -1,1 +1,1 @@
-* Add support for Eternal Starlight, Oh The Biomes We've Gone and Regions Unexplored
+* Update to 1.21.4
