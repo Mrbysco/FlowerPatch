@@ -38,7 +38,7 @@ public class PatchRegistry {
 	public static final RegistryObject<Block> OXEYE_DAISY_PATCH = register("oxeye_daisy_patch", (properties) ->
 			new FlowerPatchBlock(MobEffects.REGENERATION, 8, () -> Blocks.OXEYE_DAISY, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.OXEYE_DAISY).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 	public static final RegistryObject<Block> CORNFLOWER_PATCH = register("cornflower_patch", (properties) ->
-			new FlowerPatchBlock(MobEffects.JUMP, 6, () -> Blocks.CORNFLOWER, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
+			new FlowerPatchBlock(MobEffects.JUMP_BOOST, 6, () -> Blocks.CORNFLOWER, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.CORNFLOWER).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 	public static final RegistryObject<Block> WITHER_ROSE_PATCH = register("wither_rose_patch", (properties) ->
 			new WitherRosePatchBlock(MobEffects.WITHER, () -> Blocks.WITHER_ROSE, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.WITHER_ROSE).noCollission().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 	public static final RegistryObject<Block> LILY_OF_THE_VALLEY_PATCH = register("lily_of_the_valley_patch", (properties) ->

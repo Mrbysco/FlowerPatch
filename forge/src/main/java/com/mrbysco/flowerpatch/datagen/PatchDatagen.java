@@ -50,7 +50,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -67,7 +66,7 @@ public class PatchDatagen {
 		BlockTagsProvider provider;
 		generator.addProvider(true, provider = new PatchBlockTags(packOutput, lookupProvider));
 		generator.addProvider(true, new PatchItemTags(packOutput, lookupProvider, provider));
-		
+
 		generator.addProvider(true, new Language(packOutput));
 		generator.addProvider(true, new Models(packOutput));
 	}
@@ -208,18 +207,18 @@ public class PatchDatagen {
 
 			blockModels.blockStateOutput
 					.accept(
-							MultiVariantGenerator.multiVariant(block)
+							MultiVariantGenerator.dispatch(block)
 									.with(
-											PropertyDispatch.property(patchBlock.getProperty())
+											PropertyDispatch.initial(patchBlock.getProperty())
 													.select(2,
-															Arrays.asList(BlockModelGenerators.createRotatedVariants(
-																	patchModel2)))
+															BlockModelGenerators.createRotatedVariants(
+																	BlockModelGenerators.plainModel(patchModel2)))
 													.select(3,
-															Arrays.asList(BlockModelGenerators.createRotatedVariants(
-																	patchModel3)))
+															BlockModelGenerators.createRotatedVariants(
+																	BlockModelGenerators.plainModel(patchModel3)))
 													.select(4,
-															Arrays.asList(BlockModelGenerators.createRotatedVariants(
-																	patchModel4)))
+															BlockModelGenerators.createRotatedVariants(
+																	BlockModelGenerators.plainModel(patchModel4)))
 									)
 					);
 		}

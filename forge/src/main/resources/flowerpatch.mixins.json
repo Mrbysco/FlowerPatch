@@ -5,7 +5,7 @@
   "package": "com.mrbysco.flowerpatch.mixin",
   "target": "@env(DEFAULT)",
   "mixins": [
-    "BushBlockMixin"
+    "VegetationBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1

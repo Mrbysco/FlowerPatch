@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -48,7 +49,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 	}
 
 	@Override
-	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
 		if (level instanceof ServerLevel serverLevel && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity livingentity) {
 				if (!livingentity.isInvulnerableTo(serverLevel, entity.damageSources().wither())) {
