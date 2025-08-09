@@ -25,7 +25,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ProblemReporter;
@@ -44,6 +43,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
@@ -54,7 +54,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class PatchDatagen {
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
@@ -63,9 +63,8 @@ public class PatchDatagen {
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
 
 		generator.addProvider(true, new Loots(packOutput, lookupProvider));
-		BlockTagsProvider provider;
-		generator.addProvider(true, provider = new PatchBlockTags(packOutput, lookupProvider));
-		generator.addProvider(true, new PatchItemTags(packOutput, lookupProvider, provider));
+		generator.addProvider(true, new PatchBlockTags(packOutput, lookupProvider));
+		generator.addProvider(true, new PatchItemTags(packOutput, lookupProvider));
 
 		generator.addProvider(true, new Language(packOutput));
 		generator.addProvider(true, new Models(packOutput));
@@ -240,7 +239,7 @@ public class PatchDatagen {
 
 			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof CompatPatchBlock) {
-					this.tag(BlockTags.FLOWERS).addOptional(registryObject.getId());
+					this.tag(BlockTags.FLOWERS).addOptional(registryObject.get());
 				}
 			}
 
@@ -251,8 +250,8 @@ public class PatchDatagen {
 	}
 
 	public static class PatchItemTags extends ItemTagsProvider {
-		public PatchItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTagsProvider) {
-			super(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), Constants.MOD_ID);
+		public PatchItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(packOutput, lookupProvider, Constants.MOD_ID);
 		}
 
 		@Override

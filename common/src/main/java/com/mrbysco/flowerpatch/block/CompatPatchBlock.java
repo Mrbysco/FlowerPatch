@@ -79,10 +79,10 @@ public class CompatPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
 		Vec3 vec3 = state.getOffset(pos);
 		return switch (state.getValue(FLOWERS)) {
-			default -> ONE_AABB.move(vec3.x, vec3.y, vec3.z);
 			case 2 -> TWO_AABB.move(vec3.x, vec3.y, vec3.z);
 			case 3 -> THREE_AABB.move(vec3.x, vec3.y, vec3.z);
 			case 4 -> FOUR_AABB.move(vec3.x, vec3.y, vec3.z);
+			default -> ONE_AABB.move(vec3.x, vec3.y, vec3.z);
 		};
 	}
 
