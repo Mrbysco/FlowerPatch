@@ -112,7 +112,6 @@ if (System.getenv().CURSEFORGE_KEY) {
 
         mainFile.addRequirement("fabric-api", "cloth-config")
 //        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
-        mainFile.addOptional("oh-the-biomes-weve-gone")
     }
 }
 
@@ -133,7 +132,7 @@ if (System.getenv().MODRINTH_KEY) {
             required.project "fabric-api"
             required.project "cloth-config"
 
-            optional.project "oh-the-biomes-weve-gone"
+//            optional.project "oh-the-biomes-weve-gone"
 //            optional.project "regions-unexplored"
 //            optional.project "eternal-starlight"
         }

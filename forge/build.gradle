@@ -135,7 +135,6 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelogType = 'markdown'
 
 //        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
-        mainFile.addOptional("oh-the-biomes-weve-gone")
     }
 }
 
@@ -152,7 +151,7 @@ if (System.getenv().MODRINTH_KEY) {
         loaders = ["neoforge"]
 
         dependencies {
-            optional.project "oh-the-biomes-weve-gone"
+//            optional.project "oh-the-biomes-weve-gone"
 //            optional.project "regions-unexplored"
 //            required.project "eternal-starlight"
         }
