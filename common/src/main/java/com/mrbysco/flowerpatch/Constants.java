@@ -14,8 +14,11 @@ public class Constants {
 	public static final String MOD_NAME = "Flower Patch";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_NAME);
 
-	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = TagKey.create(Registries.BLOCK, ResourceLocation.fromNamespaceAndPath(MOD_ID, "bonemeal_able_flowers"));
+	public static final TagKey<Block> BONEMEAL_ABLE_FLOWERS = TagKey.create(Registries.BLOCK, modLoc("bonemeal_able_flowers"));
 
-	public static final TagKey<Item> BONEMEAL = TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(MOD_ID, "bonemeal"));
+	public static final TagKey<Item> BONEMEAL = TagKey.create(Registries.ITEM, modLoc("bonemeal"));
 
+	public static ResourceLocation modLoc(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	}
 }

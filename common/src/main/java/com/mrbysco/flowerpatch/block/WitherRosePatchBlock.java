@@ -3,6 +3,7 @@ package com.mrbysco.flowerpatch.block;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffect;
@@ -27,10 +28,12 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 		super(mobEffect, 8, flowerSupplier, properties);
 	}
 
+	@Override
 	protected boolean mayPlaceOn(BlockState state, BlockGetter blockGetter, BlockPos pos) {
 		return super.mayPlaceOn(state, blockGetter, pos) || state.is(Blocks.NETHERRACK) || state.is(Blocks.SOUL_SAND) || state.is(Blocks.SOUL_SOIL);
 	}
 
+	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource randomSource) {
 		VoxelShape voxelshape = this.getShape(state, level, pos, CollisionContext.empty());
 		Vec3 vec3 = voxelshape.bounds().getCenter();
@@ -44,10 +47,11 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 		}
 	}
 
+	@Override
 	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-		if (!level.isClientSide && level.getDifficulty() != Difficulty.PEACEFUL) {
+		if (level instanceof ServerLevel serverLevel && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity livingentity) {
-				if (!livingentity.isInvulnerableTo(entity.damageSources().wither())) {
+				if (!livingentity.isInvulnerableTo(serverLevel, entity.damageSources().wither())) {
 					livingentity.addEffect(new MobEffectInstance(MobEffects.WITHER, 40));
 				}
 			}

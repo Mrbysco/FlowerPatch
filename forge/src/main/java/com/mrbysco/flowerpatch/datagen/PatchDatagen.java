@@ -8,6 +8,15 @@ import com.mrbysco.flowerpatch.registration.CompatRegistry;
 import com.mrbysco.flowerpatch.registration.PatchRegistry;
 import com.mrbysco.flowerpatch.registration.RegistryObject;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.WritableRegistry;
@@ -34,18 +43,14 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
-import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
@@ -53,23 +58,18 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class PatchDatagen {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper helper = event.getExistingFileHelper();
 
-		if (event.includeServer()) {
-			generator.addProvider(event.includeServer(), new Loots(packOutput, lookupProvider));
-			BlockTagsProvider provider;
-			generator.addProvider(event.includeServer(), provider = new PatchBlockTags(packOutput, lookupProvider, helper));
-			generator.addProvider(event.includeServer(), new PatchItemTags(packOutput, lookupProvider, provider, helper));
-		}
-		if (event.includeClient()) {
-			generator.addProvider(event.includeClient(), new Language(packOutput));
-			generator.addProvider(event.includeClient(), new BlockModels(packOutput, helper));
-			generator.addProvider(event.includeClient(), new BlockStates(packOutput, helper));
-		}
+		generator.addProvider(true, new Loots(packOutput, lookupProvider));
+		BlockTagsProvider provider;
+		generator.addProvider(true, provider = new PatchBlockTags(packOutput, lookupProvider));
+		generator.addProvider(true, new PatchItemTags(packOutput, lookupProvider, provider));
+		
+		generator.addProvider(true, new Language(packOutput));
+		generator.addProvider(true, new Models(packOutput));
 	}
 
 	private static class Loots extends LootTableProvider {
@@ -140,113 +140,95 @@ public class PatchDatagen {
 			}
 
 			this.add("text.autoconfig.flowerpatch.title", "Flower Patch");
-			this.add("text.autoconfig.flowerpatch.option.general", "General");
-			this.add("text.autoconfig.flowerpatch.option.general.flowerToPatchBonemealing", "flowerToPatchBonemealing");
-			this.add("text.autoconfig.flowerpatch.option.general.patchBonemealing", "patchBonemealing");
-			this.add("text.autoconfig.flowerpatch.option.general.placeOnLeaves", "placeOnLeaves");
+			this.addConfig("general", null, "General", "General Settings");
+			this.addConfig("flowerToPatchBonemealing", "general", "Flower to Patch Bonemealing",
+					"Allows flowers to be bonemealed into flower patches");
+			this.addConfig("patchBonemealing", "general", "Patch Bonemealing",
+					"Allows flower patches to be bonemealed to add more flowers");
+			this.addConfig("placeOnLeaves", "general", "Place on Leaves",
+					"Allows flowers and other bush-like blocks to be place-able on leaves");
+		}
+
+		/**
+		 * Add the translation for a config entry
+		 *
+		 * @param path        The path of the config entry
+		 * @param name        The name of the config entry
+		 * @param description The description of the config entry (optional in case of targeting "title" or similar entries that have no tooltip)
+		 */
+		private void addConfig(String path, @Nullable String category, String name, @Nullable String description) {
+			String categoryString = category == null ? "" : category + ".";
+			this.add(Constants.MOD_ID + ".configuration." + path, name);
+			this.add("text.autoconfig." + Constants.MOD_ID + ".option." + categoryString + path, name);
+			if (description != null && !description.isEmpty()) {
+				this.add(Constants.MOD_ID + ".configuration." + path + ".tooltip", description);
+				this.add("text.autoconfig." + Constants.MOD_ID + ".option." + categoryString + path + ".@Tooltip", description);
+			}
 		}
 	}
 
-	private static class BlockStates extends BlockStateProvider {
-		public BlockStates(PackOutput packOutput, ExistingFileHelper helper) {
-			super(packOutput, Constants.MOD_ID, helper);
+	private static class Models extends ModelProvider {
+		public static final ModelTemplate PATCH_2 = ModelTemplates.create("flowerpatch:patch2", TextureSlot.CROSS).extend().renderType("cutout").build();
+		public static final ModelTemplate PATCH_3 = ModelTemplates.create("flowerpatch:patch3", TextureSlot.CROSS).extend().renderType("cutout").build();
+		public static final ModelTemplate PATCH_4 = ModelTemplates.create("flowerpatch:patch4", TextureSlot.CROSS).extend().renderType("cutout").build();
+
+		public Models(PackOutput output) {
+			super(output, Constants.MOD_ID);
 		}
 
 		@Override
-		protected void registerStatesAndModels() {
+		protected void registerModels(@NotNull BlockModelGenerators blockModels, @NotNull ItemModelGenerators itemModels) {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof PatchBlock) {
-					this.generatePatchState(registryObject.get());
+					this.generatePatchState(blockModels, registryObject.get());
 				}
 			}
 			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof PatchBlock) {
-					this.generatePatchState(registryObject.get());
+					this.generatePatchState(blockModels, registryObject.get());
 				}
 			}
 		}
 
-		protected void generatePatchState(Block block) {
-			ModelFile patchModel2 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_2"));
-			ModelFile patchModel3 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_3"));
-			ModelFile patchModel4 = models().getExistingFile(modLoc("block/" + BuiltInRegistries.BLOCK.getKey(block).getPath() + "_4"));
+		protected void generatePatchState(@NotNull BlockModelGenerators blockModels, Block block) {
 			PatchBlock patchBlock = (PatchBlock) block;
-			getVariantBuilder(block)
-					.partialState().with(patchBlock.getProperty(), 2)
-					.addModels(
-							new ConfiguredModel(patchModel2),
-							new ConfiguredModel(patchModel2, 0, 90, false),
-							new ConfiguredModel(patchModel2, 0, 180, false),
-							new ConfiguredModel(patchModel2, 0, 270, false))
-					.partialState().with(patchBlock.getProperty(), 3)
-					.addModels(
-							new ConfiguredModel(patchModel3),
-							new ConfiguredModel(patchModel3, 0, 90, false),
-							new ConfiguredModel(patchModel3, 0, 180, false),
-							new ConfiguredModel(patchModel3, 0, 270, false))
-					.partialState().with(patchBlock.getProperty(), 4)
-					.addModels(
-							new ConfiguredModel(patchModel4),
-							new ConfiguredModel(patchModel4, 0, 90, false),
-							new ConfiguredModel(patchModel4, 0, 180, false),
-							new ConfiguredModel(patchModel4, 0, 270, false));
-		}
-	}
 
-	private static class BlockModels extends BlockModelProvider {
-		public BlockModels(PackOutput packOutput, ExistingFileHelper helper) {
-			super(packOutput, Constants.MOD_ID, helper);
-		}
-
-		@Override
-		protected void registerModels() {
-			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof PatchBlock) {
-					this.generatePatchModels(registryObject.get());
-				}
+			TextureMapping crossMapping;
+			if (block instanceof CompatPatchBlock compatPatchBlock) {
+				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
+						ResourceLocation.fromNamespaceAndPath(
+								compatPatchBlock.getNameSpace(), "block/" + compatPatchBlock.getTexturePath()));
+			} else {
+				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
+						ResourceLocation.parse("block/" + BuiltInRegistries.BLOCK.getKey(patchBlock.getPatchDelegate().get()).getPath()));
 			}
-			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof CompatPatchBlock patchBlock) {
-					this.compatCrossBlock(patchBlock);
-				}
-			}
-		}
+			ResourceLocation patchModel2 = PATCH_2.createWithSuffix(block, "_2", crossMapping, blockModels.modelOutput);
+			ResourceLocation patchModel3 = PATCH_3.createWithSuffix(block, "_3", crossMapping, blockModels.modelOutput);
+			ResourceLocation patchModel4 = PATCH_4.createWithSuffix(block, "_4", crossMapping, blockModels.modelOutput);
 
-		protected void generatePatchModels(Block block) {
-			crossBlock(block);
-		}
-
-		private void crossBlock(Block block) {
-			patchBlock(block, 2);
-			patchBlock(block, 3);
-			patchBlock(block, 4);
-		}
-
-		private BlockModelBuilder patchBlock(Block block, int flowers) {
-			String path = BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + flowers;
-			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
-					"cross", mcLoc(BLOCK_FOLDER + "/" + BuiltInRegistries.BLOCK.getKey(((PatchBlock) block).getPatchDelegate().get()).getPath())).renderType("cutout");
-		}
-
-		private void compatCrossBlock(CompatPatchBlock block) {
-			compatPatchBlock(block, 2);
-			compatPatchBlock(block, 3);
-			compatPatchBlock(block, 4);
-		}
-
-		private BlockModelBuilder compatPatchBlock(CompatPatchBlock block, int flowers) {
-			String path = BuiltInRegistries.BLOCK.getKey(block).getPath() + "_" + flowers;
-			return singleTexture(path, modLoc(BLOCK_FOLDER + "/patch" + flowers),
-					"cross", ResourceLocation.fromNamespaceAndPath(
-							block.getNameSpace(), BLOCK_FOLDER + "/" + block.getTexturePath()))
-					.renderType("cutout");
+			blockModels.blockStateOutput
+					.accept(
+							MultiVariantGenerator.multiVariant(block)
+									.with(
+											PropertyDispatch.property(patchBlock.getProperty())
+													.select(2,
+															Arrays.asList(BlockModelGenerators.createRotatedVariants(
+																	patchModel2)))
+													.select(3,
+															Arrays.asList(BlockModelGenerators.createRotatedVariants(
+																	patchModel3)))
+													.select(4,
+															Arrays.asList(BlockModelGenerators.createRotatedVariants(
+																	patchModel4)))
+									)
+					);
 		}
 	}
 
 	public static class PatchBlockTags extends BlockTagsProvider {
 
-		public PatchBlockTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-			super(packOutput, lookupProvider, Constants.MOD_ID, existingFileHelper);
+		public PatchBlockTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(packOutput, lookupProvider, Constants.MOD_ID);
 		}
 
 		@Override
@@ -270,8 +252,8 @@ public class PatchDatagen {
 	}
 
 	public static class PatchItemTags extends ItemTagsProvider {
-		public PatchItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTagsProvider, ExistingFileHelper existingFileHelper) {
-			super(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), Constants.MOD_ID, existingFileHelper);
+		public PatchItemTags(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider, BlockTagsProvider blockTagsProvider) {
+			super(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), Constants.MOD_ID);
 		}
 
 		@Override

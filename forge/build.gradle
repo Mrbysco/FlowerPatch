@@ -49,7 +49,7 @@ neoForge {
         }
 
         data {
-            data()
+            clientData()
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             programArguments.addAll(
                     '--mod', "${mod_id}",
@@ -59,11 +59,11 @@ neoForge {
                     '--existing', file('../common/src/main/resources/').getAbsolutePath()
             )
 
-            programArguments.addAll(
-                    '--existing-mod', "biomeswevegone",
-                    '--existing-mod', "eternal_starlight",
-                    '--existing-mod', "regions_unexplored"
-            )
+//            programArguments.addAll(
+//                    '--existing-mod', "biomeswevegone",
+////                    '--existing-mod', "eternal_starlight",
+////                    '--existing-mod', "regions_unexplored"
+//            )
         }
     }
 

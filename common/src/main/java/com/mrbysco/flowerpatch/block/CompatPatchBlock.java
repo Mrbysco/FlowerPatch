@@ -46,7 +46,7 @@ public class CompatPatchBlock extends FlowerBlock implements BonemealableBlock, 
 		super(mobEffect, effectsDuration, properties);
 		this.flowerLocation = flowerLocation;
 		this.texturePath = texturePath;
-		this.flowerDelegate = () -> BuiltInRegistries.BLOCK.get(this.flowerLocation);
+		this.flowerDelegate = () -> BuiltInRegistries.BLOCK.getValue(this.flowerLocation);
 		this.registerDefaultState(this.stateDefinition.any().setValue(FLOWERS, Integer.valueOf(2)));
 	}
 
@@ -77,7 +77,7 @@ public class CompatPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	}
 
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
-		Vec3 vec3 = state.getOffset(blockGetter, pos);
+		Vec3 vec3 = state.getOffset(pos);
 		return switch (state.getValue(FLOWERS)) {
 			default -> ONE_AABB.move(vec3.x, vec3.y, vec3.z);
 			case 2 -> TWO_AABB.move(vec3.x, vec3.y, vec3.z);
@@ -92,7 +92,7 @@ public class CompatPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+	protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
 		return new ItemStack(flowerDelegate.get());
 	}
 

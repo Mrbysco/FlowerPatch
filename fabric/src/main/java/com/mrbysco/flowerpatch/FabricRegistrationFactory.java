@@ -37,11 +37,11 @@ public class FabricRegistrationFactory implements RegistrationProvider.Factory {
 		private Provider(String modId, ResourceKey<? extends Registry<T>> key) {
 			this.modId = modId;
 
-			final var reg = BuiltInRegistries.REGISTRY.get(key.location());
-			if (reg == null) {
+			final var reg = BuiltInRegistries.REGISTRY.getOptional(key.location());
+			if (reg.isEmpty()) {
 				throw new RuntimeException("Registry with name " + key.location() + " was not found!");
 			}
-			registry = (Registry<T>) reg;
+			registry = (Registry<T>) reg.get();
 		}
 
 		private Provider(String modId, Registry<T> registry) {
@@ -74,7 +74,7 @@ public class FabricRegistrationFactory implements RegistrationProvider.Factory {
 
 				@Override
 				public Holder<I> asHolder() {
-					return (Holder<I>) registry.getHolderOrThrow((ResourceKey<T>) this.key);
+					return (Holder<I>) registry.getOrThrow((ResourceKey<T>) this.key);
 				}
 			};
 			entries.add((RegistryObject<T>) ro);

@@ -52,8 +52,9 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 		return MAX_MUSHROOMS;
 	}
 
+	@Override
 	public VoxelShape getShape(BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
-		Vec3 vec3 = state.getOffset(blockGetter, pos);
+		Vec3 vec3 = state.getOffset(pos);
 		return switch (state.getValue(MUSHROOMS)) {
 			default -> ONE_AABB.move(vec3.x, vec3.y, vec3.z);
 			case 2 -> TWO_AABB.move(vec3.x, vec3.y, vec3.z);
@@ -68,7 +69,7 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+	protected ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state, boolean includeData) {
 		return new ItemStack(mushroomDelegate.get());
 	}
 

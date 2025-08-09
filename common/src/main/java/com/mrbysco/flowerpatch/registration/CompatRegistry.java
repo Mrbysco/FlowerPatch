@@ -3,12 +3,16 @@ package com.mrbysco.flowerpatch.registration;
 import com.mrbysco.flowerpatch.Constants;
 import com.mrbysco.flowerpatch.block.CompatPatchBlock;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+
+import java.util.function.Function;
 
 public class CompatRegistry {
 	public static final RegistrationProvider<Block> BLOCKS = RegistrationProvider.get(Registries.BLOCK, Constants.MOD_ID);
@@ -134,19 +138,34 @@ public class CompatRegistry {
 		}
 	}
 
+	/**
+	 * Helper method to register a block with and automatically set the ID
+	 * @param name the name of the block
+	 * @param func a function that takes properties and returns a block
+	 * @param props the properties to apply to the block
+	 * @return a RegistryObject<Block> that represents the registered block
+	 */
+	public static RegistryObject<Block> register(String name, Function<Properties, ? extends Block> func, BlockBehaviour.Properties props) {
+		return BLOCKS.register(name, () -> func.apply(props.setId(ResourceKey.create(Registries.BLOCK, Constants.modLoc(name)))));
+	}
+
 	public static RegistryObject<Block> registerPatch(String block) {
 		ResourceLocation blockLoc = ResourceLocation.parse(block);
-		return BLOCKS.register(blockLoc.getPath() + "_patch", () ->
-				new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, blockLoc.getPath(),
-						BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).noCollission().instabreak()
-								.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
+		return register(blockLoc.getPath() + "_patch", (properties) ->
+						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, blockLoc.getPath(), properties),
+				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollission().instabreak()
+						.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)
+		);
 	}
 
 	public static RegistryObject<Block> registerPatch(String block, String textureName) {
 		ResourceLocation blockLoc = ResourceLocation.parse(block);
-		return BLOCKS.register(blockLoc.getPath() + "_patch", () ->
-				new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, textureName,
-						BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).noCollission().instabreak()
-								.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)));
+		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
+		return register(blockLoc.getPath() + "_patch", (properties) ->
+						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, textureName, properties),
+				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollission().instabreak()
+						.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)
+		);
 	}
 }

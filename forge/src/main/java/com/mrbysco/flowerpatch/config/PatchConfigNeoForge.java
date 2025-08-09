@@ -12,7 +12,7 @@ public class PatchConfigNeoForge {
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("General settings")
-					.push("General");
+					.push("general");
 
 			flowerToPatchBonemealing = builder
 					.comment("Allows flowers to be bonemealed into flower patches [Default: true]")
