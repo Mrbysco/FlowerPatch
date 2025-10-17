@@ -18,6 +18,6 @@ public class FlowerPatchFabric implements ModInitializer {
 
 		CommonClass.init();
 
-		UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> CommonClass.onBlockInteraction(world, hitResult.getBlockPos(), player, hand));
+		UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> CommonClass.onBlockInteraction(level, hitResult.getBlockPos(), player, hand));
 	}
 }

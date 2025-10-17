@@ -154,7 +154,7 @@ public class CompatRegistry {
 		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
 		return register(blockLoc.getPath() + "_patch", (properties) ->
 						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, blockLoc.getPath(), properties),
-				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollission().instabreak()
+				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollision().instabreak()
 						.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)
 		);
 	}
@@ -164,7 +164,7 @@ public class CompatRegistry {
 		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
 		return register(blockLoc.getPath() + "_patch", (properties) ->
 						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, textureName, properties),
-				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollission().instabreak()
+				BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TULIP).setId(blockKey).noCollision().instabreak()
 						.sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ)
 		);
 	}
