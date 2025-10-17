@@ -49,7 +49,7 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 	}
 
 	@Override
-	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier effectApplier) {
+	protected void entityInside(BlockState state, Level level, BlockPos pos, Entity entity, InsideBlockEffectApplier applier, boolean intersects) {
 		if (level instanceof ServerLevel serverLevel && level.getDifficulty() != Difficulty.PEACEFUL) {
 			if (entity instanceof LivingEntity livingentity) {
 				if (!livingentity.isInvulnerableTo(serverLevel, entity.damageSources().wither())) {
@@ -57,6 +57,11 @@ public class WitherRosePatchBlock extends FlowerPatchBlock {
 				}
 			}
 		}
+	}
+
+	@Override
+	public MobEffectInstance getBeeInteractionEffect() {
+		return new MobEffectInstance(MobEffects.WITHER, 40);
 	}
 
 	@Override
