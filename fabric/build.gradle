@@ -125,14 +125,14 @@ if (System.getenv().MODRINTH_KEY) {
         versionNumber = project.version
         uploadFile = remapJar
         changelog = fileContents
-        gameVersions = ["1.20", "${minecraft_version}"]
+        gameVersions = ["${minecraft_version}"]
         loaders = ["fabric"]
 
         dependencies {
             required.project "fabric-api"
             required.project "cloth-config"
-            required.project "eternal-starlight"
-
+            
+            optional.project "eternal-starlight"
             optional.project "oh-the-biomes-weve-gone"
             optional.project "regions-unexplored"
         }
