@@ -153,7 +153,7 @@ if (System.getenv().MODRINTH_KEY) {
         dependencies {
             optional.project "oh-the-biomes-weve-gone"
             optional.project "regions-unexplored"
-            required.project "eternal-starlight"
+            optional.project "eternal-starlight"
         }
     }
 }
