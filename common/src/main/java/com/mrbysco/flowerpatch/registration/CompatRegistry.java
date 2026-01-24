@@ -4,7 +4,7 @@ import com.mrbysco.flowerpatch.Constants;
 import com.mrbysco.flowerpatch.block.CompatPatchBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -150,7 +150,7 @@ public class CompatRegistry {
 	}
 
 	public static RegistryObject<Block> registerPatch(String block) {
-		ResourceLocation blockLoc = ResourceLocation.parse(block);
+		Identifier blockLoc = Identifier.parse(block);
 		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
 		return register(blockLoc.getPath() + "_patch", (properties) ->
 						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, blockLoc.getPath(), properties),
@@ -160,7 +160,7 @@ public class CompatRegistry {
 	}
 
 	public static RegistryObject<Block> registerPatch(String block, String textureName) {
-		ResourceLocation blockLoc = ResourceLocation.parse(block);
+		Identifier blockLoc = Identifier.parse(block);
 		ResourceKey<Block> blockKey = ResourceKey.create(Registries.BLOCK, blockLoc.withSuffix("_patch"));
 		return register(blockLoc.getPath() + "_patch", (properties) ->
 						new CompatPatchBlock(MobEffects.UNLUCK, 7, blockLoc, textureName, properties),

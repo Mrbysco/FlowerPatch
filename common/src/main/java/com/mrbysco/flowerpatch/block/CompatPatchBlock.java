@@ -6,7 +6,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -38,11 +38,11 @@ public class CompatPatchBlock extends FlowerBlock implements BonemealableBlock, 
 	protected static final VoxelShape TWO_AABB = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
 	protected static final VoxelShape THREE_AABB = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 6.0D, 14.0D);
 	protected static final VoxelShape FOUR_AABB = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 7.0D, 14.0D);
-	private final ResourceLocation flowerLocation;
+	private final Identifier flowerLocation;
 	private final Supplier<Block> flowerDelegate;
 	private final String texturePath;
 
-	public CompatPatchBlock(Holder<MobEffect> mobEffect, int effectsDuration, ResourceLocation flowerLocation, String texturePath, Properties properties) {
+	public CompatPatchBlock(Holder<MobEffect> mobEffect, int effectsDuration, Identifier flowerLocation, String texturePath, Properties properties) {
 		super(mobEffect, effectsDuration, properties);
 		this.flowerLocation = flowerLocation;
 		this.texturePath = texturePath;

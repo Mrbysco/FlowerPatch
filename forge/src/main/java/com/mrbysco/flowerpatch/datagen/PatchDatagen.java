@@ -7,7 +7,7 @@ import com.mrbysco.flowerpatch.block.PatchBlock;
 import com.mrbysco.flowerpatch.registration.CompatRegistry;
 import com.mrbysco.flowerpatch.registration.PatchRegistry;
 import com.mrbysco.flowerpatch.registration.RegistryObject;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -25,7 +25,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
@@ -194,15 +194,15 @@ public class PatchDatagen {
 			TextureMapping crossMapping;
 			if (block instanceof CompatPatchBlock compatPatchBlock) {
 				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
-						ResourceLocation.fromNamespaceAndPath(
+						Identifier.fromNamespaceAndPath(
 								compatPatchBlock.getNameSpace(), "block/" + compatPatchBlock.getTexturePath()));
 			} else {
 				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
-						ResourceLocation.parse("block/" + BuiltInRegistries.BLOCK.getKey(patchBlock.getPatchDelegate().get()).getPath()));
+						Identifier.parse("block/" + BuiltInRegistries.BLOCK.getKey(patchBlock.getPatchDelegate().get()).getPath()));
 			}
-			ResourceLocation patchModel2 = PATCH_2.createWithSuffix(block, "_2", crossMapping, blockModels.modelOutput);
-			ResourceLocation patchModel3 = PATCH_3.createWithSuffix(block, "_3", crossMapping, blockModels.modelOutput);
-			ResourceLocation patchModel4 = PATCH_4.createWithSuffix(block, "_4", crossMapping, blockModels.modelOutput);
+			Identifier patchModel2 = PATCH_2.createWithSuffix(block, "_2", crossMapping, blockModels.modelOutput);
+			Identifier patchModel3 = PATCH_3.createWithSuffix(block, "_3", crossMapping, blockModels.modelOutput);
+			Identifier patchModel4 = PATCH_4.createWithSuffix(block, "_4", crossMapping, blockModels.modelOutput);
 
 			blockModels.blockStateOutput
 					.accept(
