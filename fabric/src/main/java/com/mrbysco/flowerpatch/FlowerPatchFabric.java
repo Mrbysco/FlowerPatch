@@ -1,23 +1,20 @@
 package com.mrbysco.flowerpatch;
 
-import com.mrbysco.flowerpatch.config.PatchConfigFabric;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
+import com.mrbysco.flowerpatch.config.PatchConfig;
+import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.neoforged.fml.config.ModConfig;
 
 public class FlowerPatchFabric implements ModInitializer {
-
-	public static ConfigHolder<PatchConfigFabric> config;
-
+	
 	@Override
 	public void onInitialize() {
-		config = AutoConfig.register(PatchConfigFabric.class, Toml4jConfigSerializer::new);
-		config.get();
+		ConfigRegistry.INSTANCE.register(Constants.MOD_ID, ModConfig.Type.COMMON, PatchConfig.commonSpec);
 
 		CommonClass.init();
 
-		UseBlockCallback.EVENT.register((player, level, hand, hitResult) -> CommonClass.onBlockInteraction(level, hitResult.getBlockPos(), player, hand));
+		UseBlockCallback.EVENT.register((player, level, hand, hitResult) ->
+				CommonClass.onBlockInteraction(level, hitResult.getBlockPos(), player, hand));
 	}
 }

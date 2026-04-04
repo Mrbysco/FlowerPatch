@@ -1,6 +1,6 @@
 package com.mrbysco.flowerpatch.block;
 
-import com.mrbysco.flowerpatch.platform.Services;
+import com.mrbysco.flowerpatch.config.PatchConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -79,7 +79,7 @@ public class FlowerPatchBlock extends FlowerBlock implements BonemealableBlock, 
 
 	@Override
 	public boolean isValidBonemealTarget(LevelReader levelReader, BlockPos pos, BlockState state) {
-		return Services.PLATFORM.patchBonemealing() && state.getValue(FLOWERS) < MAX_FLOWERS;
+		return PatchConfig.COMMON.patchBonemealing.get() && state.getValue(FLOWERS) < MAX_FLOWERS;
 	}
 
 	@Override

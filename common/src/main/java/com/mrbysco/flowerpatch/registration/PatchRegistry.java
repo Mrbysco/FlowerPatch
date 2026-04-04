@@ -47,9 +47,9 @@ public class PatchRegistry {
 			new FlowerPatchBlock(MobEffects.NIGHT_VISION, 5, () -> Blocks.TORCHFLOWER, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.TORCHFLOWER).noCollision().instabreak().sound(SoundType.GRASS).offsetType(BlockBehaviour.OffsetType.XZ));
 
 	public static final RegistryObject<Block> BROWN_MUSHROOM_PATCH = register("brown_mushroom_patch", (properties) ->
-			new MushroomPatchBlock(() -> Blocks.BROWN_MUSHROOM, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_MUSHROOM).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 1).hasPostProcess((state, getter, pos) -> true));
+			new MushroomPatchBlock(() -> Blocks.BROWN_MUSHROOM, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_MUSHROOM).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 1));
 	public static final RegistryObject<Block> RED_MUSHROOM_PATCH = register("red_mushroom_patch", (properties) ->
-			new MushroomPatchBlock(() -> Blocks.RED_MUSHROOM, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.RED_MUSHROOM).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).hasPostProcess((state, getter, pos) -> true));
+			new MushroomPatchBlock(() -> Blocks.RED_MUSHROOM, properties), BlockBehaviour.Properties.ofFullCopy(Blocks.RED_MUSHROOM).noCollision().randomTicks().instabreak().sound(SoundType.GRASS));
 
 	/**
 	 * Helper method to register a block with and automatically set the ID

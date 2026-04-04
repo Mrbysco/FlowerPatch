@@ -29,9 +29,13 @@ public class MushroomPatchBlock extends MushroomBlock implements PatchBlock {
 	private final Supplier<Block> mushroomDelegate;
 
 	public MushroomPatchBlock(Supplier<Block> mushroomSupplier, Properties properties) {
-		super(null, properties);
+		super(null, properties.postProcess(MushroomPatchBlock::postProcessSelf));
 		this.mushroomDelegate = mushroomSupplier;
 		this.registerDefaultState(this.stateDefinition.any().setValue(MUSHROOMS, Integer.valueOf(2)));
+	}
+
+	private static BlockPos postProcessSelf(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
+		return blockPos;
 	}
 
 	public boolean canBeReplaced(BlockState state, BlockPlaceContext placeContext) {

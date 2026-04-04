@@ -18,8 +18,8 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.language.I18n;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -27,14 +27,12 @@ import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
-import net.minecraft.world.level.storage.loot.ValidationContext;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -112,11 +110,6 @@ public class PatchDatagen {
 				return (Iterable<Block>) blocks::iterator;
 			}
 		}
-
-		@Override
-		protected void validate(WritableRegistry<LootTable> writableregistry, ValidationContext validationcontext, ProblemReporter.Collector problemreporter$collector) {
-			super.validate(writableregistry, validationcontext, problemreporter$collector);
-		}
 	}
 
 	private static class Language extends LanguageProvider {
@@ -166,9 +159,9 @@ public class PatchDatagen {
 	}
 
 	private static class Models extends ModelProvider {
-		public static final ModelTemplate PATCH_2 = ModelTemplates.create("flowerpatch:patch2", TextureSlot.CROSS).extend().renderType("cutout").build();
-		public static final ModelTemplate PATCH_3 = ModelTemplates.create("flowerpatch:patch3", TextureSlot.CROSS).extend().renderType("cutout").build();
-		public static final ModelTemplate PATCH_4 = ModelTemplates.create("flowerpatch:patch4", TextureSlot.CROSS).extend().renderType("cutout").build();
+		public static final ModelTemplate PATCH_2 = ModelTemplates.create("flowerpatch:patch2", TextureSlot.CROSS);
+		public static final ModelTemplate PATCH_3 = ModelTemplates.create("flowerpatch:patch3", TextureSlot.CROSS);
+		public static final ModelTemplate PATCH_4 = ModelTemplates.create("flowerpatch:patch4", TextureSlot.CROSS);
 
 		public Models(PackOutput output) {
 			super(output, Constants.MOD_ID);
@@ -194,11 +187,11 @@ public class PatchDatagen {
 			TextureMapping crossMapping;
 			if (block instanceof CompatPatchBlock compatPatchBlock) {
 				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
-						Identifier.fromNamespaceAndPath(
-								compatPatchBlock.getNameSpace(), "block/" + compatPatchBlock.getTexturePath()));
+						new Material(Identifier.fromNamespaceAndPath(
+								compatPatchBlock.getNameSpace(), "block/" + compatPatchBlock.getTexturePath())));
 			} else {
 				crossMapping = TextureMapping.singleSlot(TextureSlot.CROSS,
-						Identifier.parse("block/" + BuiltInRegistries.BLOCK.getKey(patchBlock.getPatchDelegate().get()).getPath()));
+						new Material(Identifier.parse("block/" + BuiltInRegistries.BLOCK.getKey(patchBlock.getPatchDelegate().get()).getPath())));
 			}
 			Identifier patchModel2 = PATCH_2.createWithSuffix(block, "_2", crossMapping, blockModels.modelOutput);
 			Identifier patchModel3 = PATCH_3.createWithSuffix(block, "_3", crossMapping, blockModels.modelOutput);

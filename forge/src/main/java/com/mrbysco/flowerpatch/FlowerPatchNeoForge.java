@@ -1,7 +1,6 @@
 package com.mrbysco.flowerpatch;
 
-import com.mrbysco.flowerpatch.client.ClientHandler;
-import com.mrbysco.flowerpatch.config.PatchConfigNeoForge;
+import com.mrbysco.flowerpatch.config.PatchConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.TriState;
 import net.minecraft.world.InteractionResult;
@@ -24,7 +23,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class FlowerPatchNeoForge {
 
 	public FlowerPatchNeoForge(IEventBus eventBus, Dist dist, ModContainer container) {
-		container.registerConfig(ModConfig.Type.COMMON, PatchConfigNeoForge.commonSpec);
+		container.registerConfig(ModConfig.Type.COMMON, PatchConfig.commonSpec);
 
 		CommonClass.init();
 
@@ -33,7 +32,6 @@ public class FlowerPatchNeoForge {
 
 		if (dist.isClient()) {
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-			eventBus.addListener(ClientHandler::onClientSetup);
 		}
 	}
 

@@ -1,6 +1,6 @@
 package com.mrbysco.flowerpatch.mixin;
 
-import com.mrbysco.flowerpatch.platform.Services;
+import com.mrbysco.flowerpatch.config.PatchConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.tags.BlockTags;
@@ -18,7 +18,7 @@ public class VegetationBlockMixin {
 	@Inject(method = "mayPlaceOn(Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z",
 			at = @At(value = "HEAD"), cancellable = true)
 	private void flowerpatch_mayPlaceOn(BlockState state, BlockGetter blockGetter, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-		if (Services.PLATFORM.placeOnLeaves() && !(blockGetter instanceof WorldGenRegion) && state.is(BlockTags.LEAVES)) {
+		if (PatchConfig.COMMON.placeOnLeaves.get() && !(blockGetter instanceof WorldGenRegion) && state.is(BlockTags.LEAVES)) {
 			cir.setReturnValue(true);
 		}
 	}

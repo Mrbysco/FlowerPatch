@@ -2,6 +2,7 @@ package com.mrbysco.flowerpatch;
 
 import com.mrbysco.flowerpatch.block.FlowerPatchBlock;
 import com.mrbysco.flowerpatch.block.PatchBlock;
+import com.mrbysco.flowerpatch.config.PatchConfig;
 import com.mrbysco.flowerpatch.platform.Services;
 import com.mrbysco.flowerpatch.registration.CompatRegistry;
 import com.mrbysco.flowerpatch.registration.CompatRegistry.BiomesWeveGoneCompat;
@@ -76,7 +77,7 @@ public class CommonClass {
 
 
 	public static InteractionResult onBonemeal(Level level, BlockPos pos, BlockState state, ItemStack stack, Player player) {
-		if (Services.PLATFORM.flowerToPatchBonemealing() &&
+		if (PatchConfig.COMMON.flowerToPatchBonemealing.get() &&
 				state.is(Constants.BONEMEAL_ABLE_FLOWERS) && stack.is(Constants.BONEMEAL)) {
 			Optional<FlowerPatchBlock> flowerPatchOptional = PatchRegistry.BLOCKS.getEntries().stream()
 					.filter(object -> object.get() instanceof FlowerPatchBlock flowerPatchBlock &&
