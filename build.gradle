@@ -9,7 +9,6 @@ subprojects {
     apply plugin: 'java'
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-    java.withJavadocJar()
     java.withSourcesJar()
 
     jar {
