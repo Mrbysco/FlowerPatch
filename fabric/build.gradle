@@ -18,6 +18,18 @@ repositories {
             includeGroup "com.terraformersmc"
         }
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        // forRepositories(fg.repository) // Uncomment when using ForgeGradle
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 }
 
 dependencies {
@@ -27,7 +39,10 @@ dependencies {
     implementation project(":common")
 
     api("fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${forge_config_api_version}")
-    implementation("com.terraformersmc:modmenu:${mod_menu_version}"){
+//    implementation("com.terraformersmc:modmenu:${mod_menu_version}"){
+//        exclude(group: "eu.pb4")
+//    }
+    implementation("maven.modrinth:mOgUt4GM:njXb639R"){
         exclude(group: "eu.pb4")
     }
 }
