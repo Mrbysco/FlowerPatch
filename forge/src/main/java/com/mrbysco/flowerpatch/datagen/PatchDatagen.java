@@ -7,7 +7,7 @@ import com.mrbysco.flowerpatch.block.PatchBlock;
 import com.mrbysco.flowerpatch.registration.CompatRegistry;
 import com.mrbysco.flowerpatch.registration.PatchRegistry;
 import com.mrbysco.flowerpatch.registration.RegistryObject;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
@@ -225,20 +225,25 @@ public class PatchDatagen {
 		@Override
 		protected void addTags(HolderLookup.Provider provider) {
 			for (RegistryObject<Block> registryObject : PatchRegistry.BLOCKS.getEntries()) {
-				if (registryObject.get() instanceof FlowerPatchBlock flowerPatchBlock) {
-					this.tag(BlockTags.FLOWERS).add(flowerPatchBlock);
+				if (registryObject.get() instanceof FlowerPatchBlock) {
+					this.tag(BlockTags.FLOWERS).add(registryObject.getResourceKey());
 				}
 			}
 
 			for (RegistryObject<Block> registryObject : CompatRegistry.BLOCKS.getEntries()) {
 				if (registryObject.get() instanceof CompatPatchBlock) {
-					this.tag(BlockTags.FLOWERS).addOptional(registryObject.get());
+					this.tag(BlockTags.FLOWERS).addOptional(registryObject.getResourceKey());
 				}
 			}
 
-			this.tag(Constants.BONEMEAL_ABLE_FLOWERS).add(Blocks.DANDELION, Blocks.POPPY, Blocks.BLUE_ORCHID, Blocks.ALLIUM,
-					Blocks.AZURE_BLUET, Blocks.RED_TULIP, Blocks.ORANGE_TULIP, Blocks.WHITE_TULIP, Blocks.PINK_TULIP,
-					Blocks.OXEYE_DAISY, Blocks.CORNFLOWER, Blocks.LILY_OF_THE_VALLEY);
+			this.tag(Constants.BONEMEAL_ABLE_FLOWERS).add(
+					Blocks.DANDELION.builtInRegistryHolder().key(), Blocks.POPPY.builtInRegistryHolder().key(),
+					Blocks.BLUE_ORCHID.builtInRegistryHolder().key(), Blocks.ALLIUM.builtInRegistryHolder().key(),
+					Blocks.AZURE_BLUET.builtInRegistryHolder().key(), Blocks.RED_TULIP.builtInRegistryHolder().key(),
+					Blocks.ORANGE_TULIP.builtInRegistryHolder().key(), Blocks.WHITE_TULIP.builtInRegistryHolder().key(),
+					Blocks.PINK_TULIP.builtInRegistryHolder().key(), Blocks.OXEYE_DAISY.builtInRegistryHolder().key(),
+					Blocks.CORNFLOWER.builtInRegistryHolder().key(), Blocks.LILY_OF_THE_VALLEY.builtInRegistryHolder().key()
+			);
 		}
 	}
 
@@ -249,7 +254,7 @@ public class PatchDatagen {
 
 		@Override
 		protected void addTags(HolderLookup.Provider provider) {
-			this.tag(Constants.BONEMEAL).add(Items.BONE_MEAL);
+			this.tag(Constants.BONEMEAL).add(Items.BONE_MEAL.builtInRegistryHolder().key());
 		}
 	}
 }
