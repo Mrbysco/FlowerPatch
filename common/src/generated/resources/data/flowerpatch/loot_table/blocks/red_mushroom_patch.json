@@ -5,54 +5,48 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:red_mushroom_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "mushrooms": "2"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:red_mushroom_patch",
+                "state": {
+                  "mushrooms": "2"
                 }
-              ],
-              "count": 2.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 2
             },
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:red_mushroom_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "mushrooms": "3"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:red_mushroom_patch",
+                "state": {
+                  "mushrooms": "3"
                 }
-              ],
-              "count": 3.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 3
             },
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:red_mushroom_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "mushrooms": "4"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:red_mushroom_patch",
+                "state": {
+                  "mushrooms": "4"
                 }
-              ],
-              "count": 4.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 4
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
           "name": "minecraft:red_mushroom"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "flowerpatch:blocks/red_mushroom_patch"

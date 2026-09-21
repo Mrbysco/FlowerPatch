@@ -5,54 +5,48 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "functions": [
+          "modifier": [
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:pink_tulip_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "flowers": "2"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:pink_tulip_patch",
+                "state": {
+                  "flowers": "2"
                 }
-              ],
-              "count": 2.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 2
             },
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:pink_tulip_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "flowers": "3"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:pink_tulip_patch",
+                "state": {
+                  "flowers": "3"
                 }
-              ],
-              "count": 3.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 3
             },
             {
-              "conditions": [
-                {
-                  "block": "flowerpatch:pink_tulip_patch",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "flowers": "4"
-                  }
+              "type": "minecraft:set_count",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "flowerpatch:pink_tulip_patch",
+                "state": {
+                  "flowers": "4"
                 }
-              ],
-              "count": 4.0,
-              "function": "minecraft:set_count"
+              },
+              "count": 4
             },
             {
-              "function": "minecraft:explosion_decay"
+              "type": "minecraft:explosion_decay"
             }
           ],
           "name": "minecraft:pink_tulip"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ],
   "random_sequence": "flowerpatch:blocks/pink_tulip_patch"

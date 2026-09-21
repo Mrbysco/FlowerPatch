@@ -20,24 +20,28 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.data.DataGenerator;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.core.registries.SingleRegistryBootstrap;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
+import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -54,29 +58,33 @@ import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber
 public class PatchDatagen {
+
+	public static final RegistrySetBuilder RELOADABLE_BUILDER = new RegistrySetBuilder()
+			.add(Registries.LOOT_TABLE, Loots.create());
+
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		DataGenerator generator = event.getGenerator();
-		PackOutput packOutput = generator.getPackOutput();
-		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
+		event.createReloadableRegistryObjects(RELOADABLE_BUILDER);
 
-		generator.addProvider(true, new Loots(packOutput, lookupProvider));
-		generator.addProvider(true, new PatchBlockTags(packOutput, lookupProvider));
-		generator.addProvider(true, new PatchItemTags(packOutput, lookupProvider));
+		event.createProvider(PatchBlockTags::new);
+		event.createProvider(PatchItemTags::new);
 
-		generator.addProvider(true, new Language(packOutput));
-		generator.addProvider(true, new Models(packOutput));
+		event.createProvider(Language::new);
+		event.createProvider(Models::new);
 	}
 
-	private static class Loots extends LootTableProvider {
-		public Loots(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-			super(packOutput, Set.of(), List.of(
-					new SubProviderEntry(PatchBlockLoot::new, LootContextParamSets.BLOCK)
-			), lookupProvider);
-		}
+	private static class Loots {
 
+		public static SingleRegistryBootstrap<LootTable> create() {
+			return new LootTableProvider(
+					BuiltInLootTables.all(),
+					List.of(
+							new LootTableProvider.SubProviderEntry(PatchBlockLoot::new, LootContextParamSets.BLOCK)
+					)
+			);
+		}
 		public static class PatchBlockLoot extends BlockLootSubProvider {
-			protected PatchBlockLoot(HolderLookup.Provider lookupProvider) {
+			protected PatchBlockLoot(LootTableSubProvider.Context lookupProvider) {
 				super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
 			}
 
@@ -95,10 +103,11 @@ public class PatchDatagen {
 			}
 
 			private void addPatch(PatchBlock patch) {
-				this.add((Block) patch, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
+				this.add((Block) patch, (block) -> LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ContextIntProviders.exactly(1))
 						.add(applyExplosionDecay(block, LootItem.lootTableItem(patch.getPatchDelegate().get()).apply(List.of(2, 3, 4), (value) ->
-								SetItemCountFunction.setCount(ConstantValue.exactly(value.floatValue())).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-										.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(patch.getProperty(), value))))))));
+								SetItemCountFunction.setCount(ContextIntProviders.exactly(value.intValue()))
+										.when(MatchBlock.blockMatches(this.blocks, block,
+												StatePropertiesPredicate.Builder.properties().hasProperty(patch.getProperty(), value))))))));
 			}
 
 			@Override
