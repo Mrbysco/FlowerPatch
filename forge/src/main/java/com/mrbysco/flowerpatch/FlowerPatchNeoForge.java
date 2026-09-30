@@ -23,7 +23,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 public class FlowerPatchNeoForge {
 
 	public FlowerPatchNeoForge(IEventBus eventBus, Dist dist, ModContainer container) {
-		container.registerConfig(ModConfig.Type.COMMON, PatchConfig.commonSpec);
+		container.registerConfig(ModConfig.Type.LOCAL, PatchConfig.commonSpec);
 
 		CommonClass.init();
 
