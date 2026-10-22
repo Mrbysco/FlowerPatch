@@ -20,10 +20,7 @@ import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.core.registries.SingleRegistryBootstrap;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
@@ -34,7 +31,6 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.storage.loot.BuiltInLootTables;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -48,6 +44,7 @@ import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.data.event.GatherDataRegistryEntriesEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -59,13 +56,13 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber
 public class PatchDatagen {
 
-	public static final RegistrySetBuilder RELOADABLE_BUILDER = new RegistrySetBuilder()
-			.add(Registries.LOOT_TABLE, Loots.create());
+	@SubscribeEvent
+	static void onGatherRegistries(GatherDataRegistryEntriesEvent event) {
+		event.lootTable(new LootTableProvider.SubProviderEntry(Loots.PatchBlockLoot::new, LootContextParamSets.BLOCK));
+	}
 
 	@SubscribeEvent
 	public static void gatherData(GatherDataEvent.Client event) {
-		event.createReloadableRegistryObjects(RELOADABLE_BUILDER);
-
 		event.createProvider(PatchBlockTags::new);
 		event.createProvider(PatchItemTags::new);
 
@@ -75,14 +72,6 @@ public class PatchDatagen {
 
 	private static class Loots {
 
-		public static SingleRegistryBootstrap<LootTable> create() {
-			return new LootTableProvider(
-					BuiltInLootTables.all(),
-					List.of(
-							new LootTableProvider.SubProviderEntry(PatchBlockLoot::new, LootContextParamSets.BLOCK)
-					)
-			);
-		}
 		public static class PatchBlockLoot extends BlockLootSubProvider {
 			protected PatchBlockLoot(LootTableSubProvider.Context lookupProvider) {
 				super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookupProvider);
