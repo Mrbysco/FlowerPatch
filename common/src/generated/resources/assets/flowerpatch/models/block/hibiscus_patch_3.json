@@ -1,0 +1,6 @@
+{
+  "parent": "flowerpatch:block/patch3",
+  "textures": {
+    "cross": "regions_unexplored:block/hibiscus"
+  }
+}

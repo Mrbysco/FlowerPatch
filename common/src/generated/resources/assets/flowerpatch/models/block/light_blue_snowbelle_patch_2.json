@@ -1,0 +1,6 @@
+{
+  "parent": "flowerpatch:block/patch2",
+  "textures": {
+    "cross": "regions_unexplored:block/light_blue_snowbelle"
+  }
+}

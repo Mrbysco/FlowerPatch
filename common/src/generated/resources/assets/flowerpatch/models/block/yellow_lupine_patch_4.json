@@ -1,0 +1,6 @@
+{
+  "parent": "flowerpatch:block/patch4",
+  "textures": {
+    "cross": "regions_unexplored:block/lupine_yellow"
+  }
+}
