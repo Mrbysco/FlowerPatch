@@ -141,7 +141,9 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelog = file("$project.rootDir/changelog.md")
         mainFile.changelogType = 'markdown'
 
-//        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
+//        mainFile.addOptional("oh-the-biomes-weve-gone")
+        mainFile.addOptional("regions-unexplored")
+//        mainFile.addOptional("eternal-starlight")
     }
 }
 
@@ -159,7 +161,7 @@ if (System.getenv().MODRINTH_KEY) {
 
         dependencies {
 //            optional.project "oh-the-biomes-weve-gone"
-//            optional.project "regions-unexplored"
+            optional.project "regions-unexplored"
 //            required.project "eternal-starlight"
         }
     }

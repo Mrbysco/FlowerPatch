@@ -104,7 +104,9 @@ if (System.getenv().CURSEFORGE_KEY) {
         mainFile.changelogType = 'markdown'
 
         mainFile.addRequirement("fabric-api", "forge-config-api-port")
-//        mainFile.addOptional("oh-the-biomes-weve-gone", "regions-unexplored", "eternal-starlight")
+//        mainFile.addOptional("oh-the-biomes-weve-gone")
+        mainFile.addOptional("regions-unexplored")
+//        mainFile.addOptional("eternal-starlight")
     }
 }
 
@@ -126,7 +128,7 @@ if (System.getenv().MODRINTH_KEY) {
             required.project "forge-config-api-port"
 
 //            optional.project "oh-the-biomes-weve-gone"
-//            optional.project "regions-unexplored"
+            optional.project "regions-unexplored"
 //            optional.project "eternal-starlight"
         }
     }
