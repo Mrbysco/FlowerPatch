@@ -1,1 +1,2 @@
-* Update to 26.1.1
+* Fix flower patch shading
+* Re-enable Regions Unexplored support
