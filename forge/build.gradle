@@ -58,7 +58,6 @@ neoForge {
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
-            sourceSet sourceSets.test
         }
     }
 }
@@ -69,9 +68,29 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                url "https://cursemaven.com"
+            }
+        }
+        filter {
+            includeGroup "curse.maven"
+        }
+    }
+}
+
 dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
     compileOnly project(":common")
+
+    compileOnly "curse.maven:jade-324717:9156414"
+    localRuntime "curse.maven:jade-324717:9156414"
+    compileOnly "curse.maven:regions-unexplored-659110:9251786"
+    localRuntime "curse.maven:regions-unexplored-659110:9251786"
+    compileOnly "curse.maven:lithostitched-936015:9170254"
+    localRuntime "curse.maven:lithostitched-936015:9170254"
 }
 
 compileJava {
