@@ -1,1 +1,1 @@
-* Update NeoForge support (Requires **26.3.0.37-beta** or newer)
+* Fix flower patch shading (Thanks to Oslypsis on Discord)
