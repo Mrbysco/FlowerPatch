@@ -1,2 +1,1 @@
-* Fix flower patch shading
-* Re-enable Regions Unexplored support
+* Fix Regions Unexplored support
