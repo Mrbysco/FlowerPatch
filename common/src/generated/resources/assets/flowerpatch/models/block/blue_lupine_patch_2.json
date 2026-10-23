@@ -1,6 +1,6 @@
 {
   "parent": "flowerpatch:block/patch2",
   "textures": {
-    "cross": "regions_unexplored:block/lupine_blue"
+    "cross": "regions_unexplored:block/blue_lupine"
   }
 }

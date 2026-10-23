@@ -1,6 +1,6 @@
 {
   "parent": "flowerpatch:block/patch3",
   "textures": {
-    "cross": "regions_unexplored:block/trillium_white"
+    "cross": "regions_unexplored:block/white_trillium"
   }
 }
