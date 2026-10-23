@@ -98,7 +98,7 @@ public class CompatRegistry {
 		public static final RegistryObject<Block> ASTER_PATCH = registerPatch("regions_unexplored:aster");
 		public static final RegistryObject<Block> BLACK_SNOWBELLE_PATCH = registerPatch("regions_unexplored:black_snowbelle");
 		public static final RegistryObject<Block> BLEEDING_HEART_PATCH = registerPatch("regions_unexplored:bleeding_heart");
-		public static final RegistryObject<Block> BLUE_LUPINE_PATCH = registerPatch("regions_unexplored:blue_lupine", "lupine_blue");
+		public static final RegistryObject<Block> BLUE_LUPINE_PATCH = registerPatch("regions_unexplored:blue_lupine");
 		public static final RegistryObject<Block> BLUE_SNOWBELLE_PATCH = registerPatch("regions_unexplored:blue_snowbelle");
 		public static final RegistryObject<Block> BROWN_SNOWBELLE_PATCH = registerPatch("regions_unexplored:brown_snowbelle");
 		public static final RegistryObject<Block> CYAN_SNOWBELLE_PATCH = registerPatch("regions_unexplored:cyan_snowbelle");
@@ -117,20 +117,20 @@ public class CompatRegistry {
 		public static final RegistryObject<Block> MAGENTA_SNOWBELLE_PATCH = registerPatch("regions_unexplored:magenta_snowbelle");
 		public static final RegistryObject<Block> MALLOW_PATCH = registerPatch("regions_unexplored:mallow");
 		public static final RegistryObject<Block> ORANGE_SNOWBELLE_PATCH = registerPatch("regions_unexplored:orange_snowbelle");
-		public static final RegistryObject<Block> PINK_LUPINE_PATCH = registerPatch("regions_unexplored:pink_lupine", "lupine_pink");
+		public static final RegistryObject<Block> PINK_LUPINE_PATCH = registerPatch("regions_unexplored:pink_lupine");
 		public static final RegistryObject<Block> PINK_SNOWBELLE_PATCH = registerPatch("regions_unexplored:pink_snowbelle");
 		public static final RegistryObject<Block> POPPY_BUSH_PATCH = registerPatch("regions_unexplored:poppy_bush");
-		public static final RegistryObject<Block> PURPLE_LUPINE_PATCH = registerPatch("regions_unexplored:purple_lupine", "lupine_purple");
+		public static final RegistryObject<Block> PURPLE_LUPINE_PATCH = registerPatch("regions_unexplored:purple_lupine");
 		public static final RegistryObject<Block> PURPLE_SNOWBELLE_PATCH = registerPatch("regions_unexplored:purple_snowbelle");
-		public static final RegistryObject<Block> RED_LUPINE_PATCH = registerPatch("regions_unexplored:red_lupine", "lupine_red");
+		public static final RegistryObject<Block> RED_LUPINE_PATCH = registerPatch("regions_unexplored:red_lupine");
 		public static final RegistryObject<Block> RED_SNOWBELLE_PATCH = registerPatch("regions_unexplored:red_snowbelle");
-		public static final RegistryObject<Block> SALMON_POPPY_BUSH_PATCH = registerPatch("regions_unexplored:salmon_poppy_bush", "poppy_bush_salmon");
+		public static final RegistryObject<Block> SALMON_POPPY_BUSH_PATCH = registerPatch("regions_unexplored:salmon_poppy_bush");
 		public static final RegistryObject<Block> TSUBAKI_PATCH = registerPatch("regions_unexplored:tsubaki");
 		public static final RegistryObject<Block> WARATAH_PATCH = registerPatch("regions_unexplored:waratah");
 		public static final RegistryObject<Block> WHITE_SNOWBELLE_PATCH = registerPatch("regions_unexplored:white_snowbelle");
-		public static final RegistryObject<Block> WHITE_TRILLIUM_PATCH = registerPatch("regions_unexplored:white_trillium", "trillium_white");
+		public static final RegistryObject<Block> WHITE_TRILLIUM_PATCH = registerPatch("regions_unexplored:white_trillium");
 		public static final RegistryObject<Block> WILTING_TRILLIUM_PATCH = registerPatch("regions_unexplored:wilting_trillium");
-		public static final RegistryObject<Block> YELLOW_LUPINE_PATCH = registerPatch("regions_unexplored:yellow_lupine", "lupine_yellow");
+		public static final RegistryObject<Block> YELLOW_LUPINE_PATCH = registerPatch("regions_unexplored:yellow_lupine");
 		public static final RegistryObject<Block> YELLOW_SNOWBELLE_PATCH = registerPatch("regions_unexplored:yellow_snowbelle");
 
 		// Called in the mod initializer / constructor in order to make sure that items are registered
